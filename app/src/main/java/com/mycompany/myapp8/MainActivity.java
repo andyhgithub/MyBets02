@@ -174,27 +174,27 @@ public class MainActivity extends Activity
 
 							System.out.println(element.ownText() + "===" + r);
 
-							System.out.println(element.ownText() + "===" + r);
-							System.out.println("... element.id())..." + element.id());
-							System.out.println("... element.tagName())..." + element.tagName());
-							System.out.println("... element.tag())..." + element.tag());
-							System.out.println("... element.className())..." + element.className());
-							System.out.println("... element.data())..." + element.data());
-							System.out.println("... element.cssSelector())..." + element.cssSelector());
-							System.out.println("... element.attributes())..." + element.attributes());
-							System.out.println("... element.classNames())..." + element.classNames());
-							System.out.println("... element.text())..." + element.text());
-							System.out.println("... element.ownText())..." + element.ownText());
-							System.out.println("... element.nodeName())..." + element.nodeName());
-
-							System.out.println("... element.outerHtml())..." + element.outerHtml());
-							System.out.println("... element.hasText())..." + element.hasText());
-							System.out.println("... element.hasText())..." + element.hasText());
-
-							System.out.println("... element.text().length(.." + element.text().length());
-							System.out.println("... element.text().length(.." + element.text().length());
-
-							System.out.println(element.ownText() + "===" + r);
+//							System.out.println(element.ownText() + "===" + r);
+//							System.out.println("... element.id())..." + element.id());
+//							System.out.println("... element.tagName())..." + element.tagName());
+//							System.out.println("... element.tag())..." + element.tag());
+//							System.out.println("... element.className())..." + element.className());
+//							System.out.println("... element.data())..." + element.data());
+//							System.out.println("... element.cssSelector())..." + element.cssSelector());
+//							System.out.println("... element.attributes())..." + element.attributes());
+//							System.out.println("... element.classNames())..." + element.classNames());
+//							System.out.println("... element.text())..." + element.text());
+//							System.out.println("... element.ownText())..." + element.ownText());
+//							System.out.println("... element.nodeName())..." + element.nodeName());
+//
+//							System.out.println("... element.outerHtml())..." + element.outerHtml());
+//							System.out.println("... element.hasText())..." + element.hasText());
+//							System.out.println("... element.hasText())..." + element.hasText());
+//
+//							System.out.println("... element.text().length(.." + element.text().length());
+//							System.out.println("... element.text().length(.." + element.text().length());
+//
+//							System.out.println(element.ownText() + "===" + r);
 							
 						}
 
