@@ -124,7 +124,30 @@ public class MainActivity extends Activity
 						
 						
 						
-						
+						Elements elemSingle = doc.body().select("*:matches(Armenia)");
+						for (Element elementS : elemSingle) {
+							System.err.println("... element.id())..." + elementS.id());
+							System.err.println("... element.tagName())..." + elementS.tagName());
+							System.err.println("... element.tag())..." + elementS.tag());
+							System.err.println("... element.className())..." + elementS.className());
+							System.err.println("... element.data())..." + elementS.data());
+							System.err.println("... element.cssSelector())..." + elementS.cssSelector());
+							System.err.println("... element.attributes())..." + elementS.attributes());
+							System.err.println("... element.classNames())..." + elementS.classNames());
+							System.err.println("... element.text())..." + elementS.text());
+							System.err.println("... element.ownText())..." + elementS.ownText());
+							System.err.println("... element.nodeName())..." + elementS.nodeName());
+
+							System.out.println("... element.outerHtml())..." + elementS.outerHtml());
+							System.out.println("... element.hasText())..." + elementS.hasText());
+							System.out.println("... element.hasText())..." + elementS.hasText());
+
+							System.out.println("... element.text().length(.." + elementS.text().length());
+							System.out.println("... element.text().length(.." + elementS.text().length());
+
+							System.out.println(elementS.ownText() + "===elementS.ownText" );
+							
+						}
 						
 						
 						
@@ -164,8 +187,10 @@ public class MainActivity extends Activity
 							
 								
 								
-			//					System.out.println(ix + "===" + n);
+								System.out.println(ix + "ix ===" + n);
 						
+								System.err.println(element.ownText() + "=element.ownText() String ==" + s);
+								System.err.println(element.ownText() + "=element.ownText() parsed ==" + r);
 								
 								
 								n++;
@@ -174,27 +199,27 @@ public class MainActivity extends Activity
 
 							System.out.println(element.ownText() + "===" + r);
 
-//							System.out.println(element.ownText() + "===" + r);
-//							System.out.println("... element.id())..." + element.id());
-//							System.out.println("... element.tagName())..." + element.tagName());
-//							System.out.println("... element.tag())..." + element.tag());
-//							System.out.println("... element.className())..." + element.className());
-//							System.out.println("... element.data())..." + element.data());
-//							System.out.println("... element.cssSelector())..." + element.cssSelector());
-//							System.out.println("... element.attributes())..." + element.attributes());
-//							System.out.println("... element.classNames())..." + element.classNames());
-//							System.out.println("... element.text())..." + element.text());
-//							System.out.println("... element.ownText())..." + element.ownText());
-//							System.out.println("... element.nodeName())..." + element.nodeName());
-//
-//							System.out.println("... element.outerHtml())..." + element.outerHtml());
-//							System.out.println("... element.hasText())..." + element.hasText());
-//							System.out.println("... element.hasText())..." + element.hasText());
-//
-//							System.out.println("... element.text().length(.." + element.text().length());
-//							System.out.println("... element.text().length(.." + element.text().length());
-//
-//							System.out.println(element.ownText() + "===" + r);
+							System.out.println(element.ownText() + "===" + r);
+							System.out.println("... element.id())..." + element.id());
+							System.out.println("... element.tagName())..." + element.tagName());
+							System.out.println("... element.tag())..." + element.tag());
+							System.out.println("... element.className())..." + element.className());
+							System.out.println("... element.data())..." + element.data());
+							System.out.println("... element.cssSelector())..." + element.cssSelector());
+							System.out.println("... element.attributes())..." + element.attributes());
+							System.out.println("... element.classNames())..." + element.classNames());
+							System.out.println("... element.text())..." + element.text());
+							System.out.println("... element.ownText())..." + element.ownText());
+							System.out.println("... element.nodeName())..." + element.nodeName());
+
+							System.out.println("... element.outerHtml())..." + element.outerHtml());
+							System.out.println("... element.hasText())..." + element.hasText());
+							System.out.println("... element.hasText())..." + element.hasText());
+
+							System.out.println("... element.text().length(.." + element.text().length());
+							System.out.println("... element.text().length(.." + element.text().length());
+
+							System.out.println(element.ownText() + "===" + r);
 							
 						}
 
