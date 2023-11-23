@@ -29,16 +29,70 @@ import android.app.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
-import org.jsoup.*;
+//import org.jsoup.*;
+//import org.jsoup.parser;
+import org.jsoup.parser.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
-import java.util.*;
+
+// import org.jsoup.internal;
+
+import org.jsoup.internal.*;
 import java.io.*;
 import android.text.method.*;
+import java.util.*;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
+
+
+//import org.apache.commons.*;
+
+//import org.apache.commons.lang3.StringUtils;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+// import core.util.StringUtils;
 
 public class MainActivity extends Activity
 {
 
+	
+	String[] splitsTemp; // = new String[0];
+
+	final static String  allDOM = " Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search " +
+	"Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports " +
+	"Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker " +
+									"Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & " +
+	"UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce " +
+	"HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor " +
+	"SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange" +
+	"English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India " +
+	"Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time " +
+	"Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska" +
+	"{ GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time" +
+	"(US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), " +
+	"Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic " +
+	"{ GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, " +
+	"Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg " +
+	"{ GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent " +
+	"{ GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon" +
+	"{ GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, " +
+	"Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. " +
+	"{ GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc " +
+	"{ EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble " +
+	"{ SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions " +
+	"LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar " +
+	"1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro " +
+	"2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback " +
+	"is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad " +
+	"Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at " +
+	"odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 " +
+	"Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set " +
+									"markets, which expire after 7 days. Offer valid from 12:00 UK";
+	// allTextElems ==== Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska { GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time (US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic { GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg { GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent { GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon { GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. { GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc { EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble { SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar 1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro 2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set markets, which expire after 7 days. Offer valid from 12:00 UK";
+	
+	
+	
     private TextView result;
     private Button fetch;
 
@@ -63,7 +117,67 @@ public class MainActivity extends Activity
 					getBodyText();
 				}
 			});
+			
+			
+			String tmp = "hdjsjrhdhqu37udh)bsh/hg72/3 egg heh";
+			tmp.split("0-9");
+			
+		// "*:matches(^[0-9]*/[0-9]*$)")
+			
+			
+		splitsTemp = allDOM.split("([0-9]{1,4}/[0-9]{1,4})");
+		for (int i = 0; i < splitsTemp.length; i++){
+	//		System.out.println(i + " | " + splitsTemp[i]);
+		}
+		
+		String[] splitAtString;
+		allDOM.split("");
+	//	splitStringAtString(java.lang.String pString, java.lang.String pDelimiter)
+	//	Splits the specified String containing the specified substring into individual Strings that were delimited by the specified substring.
+			
+	
+
+		int namesEndPos = -1;
+		int oddsPos = -1;
+		int nextNamesEndPos = -1;
+		int nextOddsPos = -1;
+		Pattern oddsPattern = Pattern.compile("([0-9]{1,4}/[0-9]{1,4})");  // insert your pattern here
+		Matcher oddsMatch = oddsPattern.matcher(allDOM);
+		if (oddsMatch.find()) {
+			oddsPos = oddsMatch.start();
+		}
+		String tmpNew = allDOM.substring(oddsPos);
+
+		System.out.println("________");
+		System.out.println("________");
+		System.out.println("________");
+		System.out.println("________");
+		System.out.println("tmpNew === " + tmpNew);
+		
+		Pattern endPattern = Pattern.compile("Draw");  // insert your pattern here
+		Matcher endMatch = endPattern.matcher(tmpNew);
+		if (endMatch.find()) {
+			namesEndPos = endMatch.start();
+		}
+		String nextNew = tmpNew.substring(0, namesEndPos);
+		System.out.println(oddsPos + "< oddsPos ||| " + nextNew + "  namesEndPos > " + namesEndPos);
+		
+		System.out.println("________");
+		System.out.println("________");
+		String nextAll = tmpNew.substring(namesEndPos);
+		System.out.println("________");
+		System.out.println("________");
+		System.err.println(nextAll + "________");
+		System.out.println("________");
+	//	String tmpName = 
+	//	allDOM.substring(oddsPos, namesEndPos);
+//	
+//		System.out.println("tmpName === " + tmpName);
+		
+		
     }
+	
+	
     private void getBodyText() {
         new Thread(new Runnable() {
 				@Override
@@ -116,38 +230,89 @@ public class MainActivity extends Activity
 				
 							
 		
-							System.out.print("!" + element.ownText() + "-");
+				//			System.out.print("!" + element.ownText() + "-");
 			
 							
 						}
 
 						
+						int nix = 0;
 						
+						Elements elemsAll = doc.body().select("*:matches(Italy)");
+					//	Elements elemsAll = doc.body().select("*:matches(Italy)");
+				//		Elements elemSingle = doc.body().select("*:matches(Serbia)");
+			//			Elements elemSingle = doc.body().select("*:matches(Armenia)");
 						
-						Elements elemSingle = doc.body().select("*:matches(Armenia)");
-						for (Element elementS : elemSingle) {
-							System.err.println("... element.id())..." + elementS.id());
-							System.err.println("... element.tagName())..." + elementS.tagName());
-							System.err.println("... element.tag())..." + elementS.tag());
-							System.err.println("... element.className())..." + elementS.className());
-							System.err.println("... element.data())..." + elementS.data());
-							System.err.println("... element.cssSelector())..." + elementS.cssSelector());
-							System.err.println("... element.attributes())..." + elementS.attributes());
-							System.err.println("... element.classNames())..." + elementS.classNames());
-							System.err.println("... element.text())..." + elementS.text());
-							System.err.println("... element.ownText())..." + elementS.ownText());
-							System.err.println("... element.nodeName())..." + elementS.nodeName());
-
-							System.out.println("... element.outerHtml())..." + elementS.outerHtml());
-							System.out.println("... element.hasText())..." + elementS.hasText());
-							System.out.println("... element.hasText())..." + elementS.hasText());
-
-							System.out.println("... element.text().length(.." + elementS.text().length());
-							System.out.println("... element.text().length(.." + elementS.text().length());
-
-							System.out.println(elementS.ownText() + "===elementS.ownText" );
+			
+					//	elemsAll[18] = "";
+					
+					
+						elemsAll.size();
+					
+						
+							
+						String allTextElems = elemsAll.text();
+			
+						System.err.println("allTextElems ==== " + allTextElems);
+						
+						String namesAndOddEtc = "";
+						for (Element elementS : elemsAll) {
+							
+							
+//							System.err.print("... element.id())..." + elementS.id());
+//							System.out.print("... element.tagName())..." + elementS.tagName());
+//							System.err.print("... element.tag())..." + elementS.tag());
+//							System.err.print("... element.className())..." + elementS.className());
+//							System.err.print("... element.data())..." + elementS.data());
+//							System.err.print("... element.cssSelector())..." + elementS.cssSelector());
+//							System.err.print("... element.attributes())..." + elementS.attributes());
+//							System.err.print("... element.classNames())..." + elementS.classNames());
+//							System.err.print("... element.text())..." + elementS.text());
+//							System.err.print("... element.ownText())..." + elementS.ownText());
+//							System.err.print("... element.nodeName())..." + elementS.nodeName());
+//							System.err.print("... element.outerHtml())..." + elementS.outerHtml());
+//							System.err.print("... element.hasText())..." + elementS.hasText());
+//							System.err.print("... element.hasText())..." + elementS.hasText());
+//							System.err.print("... element.text().length(.." + elementS.text().length());
+//							System.err.print("... element.text().length(.." + elementS.text().length());
+//							System.err.print(elementS.ownText() + "===elementS.ownText" );
+//							System.out.println(": Xnames ix = " + nix++);
+						
+//							System.err.println("... element.id())..." + elementS.id());
+//							System.out.println("... element.tagName())..." + elementS.tagName());
+//							System.err.println("... element.tag())..." + elementS.tag());
+//							System.err.println("... element.className())..." + elementS.className());
+//							System.err.println("... element.data())..." + elementS.data());
+//							System.err.println("... element.cssSelector())..." + elementS.cssSelector());
+//							System.err.println("... element.attributes())..." + elementS.attributes());
+//							System.err.println("... element.classNames())..." + elementS.classNames());
+//							System.err.println("... element.text())..." + elementS.text());
+//							System.err.println("... element.ownText())..." + elementS.ownText());
+//							System.err.println("... element.nodeName())..." + elementS.nodeName());
+//							System.err.println("... element.outerHtml())..." + elementS.outerHtml());
+//							System.err.println("... element.hasText())..." + elementS.hasText());
+//							System.err.println("... element.hasText())..." + elementS.hasText());
+//							System.err.println("... element.text().length(.." + elementS.text().length());
+//							System.err.println("... element.text().length(.." + elementS.text().length());
+//							System.err.println(elementS.ownText() + "===elementS.ownText" );
+//							System.out.println("names ix = " + nix++);
+							
+							if (nix == 18){
+								namesAndOddEtc = elementS.text();
+							}
+				//			System.out.println("ix=" + (nix++) + "... element.text())..." + elementS.text());
+//							
 							
 						}
+						
+						System.err.println("namesAndOddEtc === " + namesAndOddEtc);
+						
+						
+						System.out.println("allDOM === " + allDOM);
+						System.err.println("allDOM === " + allDOM);
+						
+						Element names = doc.select("className.side-name").first();
+						// div with class=masthead
 						
 						
 						
@@ -157,6 +322,13 @@ public class MainActivity extends Activity
 						//	Elements elems2 = doc.body().select("*:matches(^[0-9]*/[0-9]*$|(Draw))");
 						Elements elems2 = doc.body().select("*:matches(^[0-9]*/[0-9]*$)");
 
+						
+						int nx = 0;
+						for (Element elementOdds : elems2) {
+							String s = elementOdds.ownText();
+			//				System.out.println((nx++) + " | " + s);
+						}
+							
 
 						int n = 0;
 						for (Element element : elems2) {
@@ -187,39 +359,43 @@ public class MainActivity extends Activity
 							
 								
 								
-								System.out.println(ix + "ix ===" + n);
-						
-								System.err.println(element.ownText() + "=element.ownText() String ==" + s);
-								System.err.println(element.ownText() + "=element.ownText() parsed ==" + r);
+//								System.out.print(ix + "ix ===" + n);
+//						
+//								System.err.print(element.ownText() + "=element.ownText() String ==" + s);
+//								System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
 								
+								System.out.print(ix + "ix ===" + n);
+
+								System.err.print(element.ownText() + "=element.ownText() String ==" + s);
+								System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
 								
 								n++;
 							}
 
 
-							System.out.println(element.ownText() + "===" + r);
-
-							System.out.println(element.ownText() + "===" + r);
-							System.out.println("... element.id())..." + element.id());
-							System.out.println("... element.tagName())..." + element.tagName());
-							System.out.println("... element.tag())..." + element.tag());
-							System.out.println("... element.className())..." + element.className());
-							System.out.println("... element.data())..." + element.data());
-							System.out.println("... element.cssSelector())..." + element.cssSelector());
-							System.out.println("... element.attributes())..." + element.attributes());
-							System.out.println("... element.classNames())..." + element.classNames());
-							System.out.println("... element.text())..." + element.text());
-							System.out.println("... element.ownText())..." + element.ownText());
-							System.out.println("... element.nodeName())..." + element.nodeName());
-
-							System.out.println("... element.outerHtml())..." + element.outerHtml());
-							System.out.println("... element.hasText())..." + element.hasText());
-							System.out.println("... element.hasText())..." + element.hasText());
-
-							System.out.println("... element.text().length(.." + element.text().length());
-							System.out.println("... element.text().length(.." + element.text().length());
-
-							System.out.println(element.ownText() + "===" + r);
+//							System.out.println(element.ownText() + "===" + r);
+//
+//							System.out.println(element.ownText() + "===" + r);
+//							System.out.println("... element.id())..." + element.id());
+//							System.out.println("... element.tagName())..." + element.tagName());
+//							System.out.println("... element.tag())..." + element.tag());
+//							System.out.println("... element.className())..." + element.className());
+//							System.out.println("... element.data())..." + element.data());
+//							System.out.println("... element.cssSelector())..." + element.cssSelector());
+//							System.out.println("... element.attributes())..." + element.attributes());
+//							System.out.println("... element.classNames())..." + element.classNames());
+//							System.out.println("... element.text())..." + element.text());
+//							System.out.println("... element.ownText())..." + element.ownText());
+//							System.out.println("... element.nodeName())..." + element.nodeName());
+//
+//							System.out.println("... element.outerHtml())..." + element.outerHtml());
+//							System.out.println("... element.hasText())..." + element.hasText());
+//							System.out.println("... element.hasText())..." + element.hasText());
+//
+//							System.out.println("... element.text().length(.." + element.text().length());
+//							System.out.println("... element.text().length(.." + element.text().length());
+//
+//							System.out.println(element.ownText() + "===" + r);
 							
 						}
 
@@ -305,13 +481,21 @@ public class MainActivity extends Activity
 					} catch (IOException e) {
 
 
-						builder.append("axxxx");;
+						builder.append("IOException: " + e.getMessage());
 
 						//		builder.append("Error : ").append(e.getLocalizedMessage()).append("\n");
 
 						//		builder.append("Error : ").append(e.getMessage()).append(e.getLocalizedMessage()).append("\n");
 						System.err.println("Error = " + e.getMessage());
 						System.out.println("error = " + e.getMessage());
+						System.out.println("============");
+						System.err.println("============");
+						System.out.println("getMessage = " + e.getMessage());
+						System.out.println("getLocalizedMessage = " + e.getLocalizedMessage());
+						System.out.println("e.printStackTrace() = " );e.printStackTrace();
+						
+						System.err.println("============");
+						System.out.println("============");
 					}
 
 					runOnUiThread(new Runnable() {

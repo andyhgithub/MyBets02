@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.mycompany.myapp8"
-        minSdkVersion 14
+        minSdkVersion 13
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -23,6 +23,18 @@ dependencies {
 	
 	implementation 'org.jsoup:jsoup:1.11.1'
 	
+	//implementation 'apache.commons:commons-lang3:3.13.0'
+	
+	
+	//compile 'org.apache.commons:commons-lang3:3.13.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+/*
+<dependency>
+  <groupId>org.apache.commons</groupId>
+  <artifactId>commons-lang3</artifactId>
+  <version>3.13.0</version>
+</dependency>
+*/
 
