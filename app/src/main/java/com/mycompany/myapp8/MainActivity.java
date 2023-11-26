@@ -1,7 +1,14 @@
 package com.mycompany.myapp8;
 
-/*
 
+
+//
+// XXX TODO Pass "allText" to localTest(); and rename
+//
+// See below...
+/*
+ 
+ 
 */
 //
 //You can use any Web Scraper/Crawler API to fetch data from web site.
@@ -105,6 +112,12 @@ public class MainActivity extends Activity
 		result.setMovementMethod(new ScrollingMovementMethod());
 
         fetch = (Button) findViewById(R.id.fetch);
+		
+		
+	//	localTest();
+		
+		
+		
         fetch.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -119,61 +132,6 @@ public class MainActivity extends Activity
 			});
 			
 			
-			String tmp = "hdjsjrhdhqu37udh)bsh/hg72/3 egg heh";
-			tmp.split("0-9");
-			
-		// "*:matches(^[0-9]*/[0-9]*$)")
-			
-			
-		splitsTemp = allDOM.split("([0-9]{1,4}/[0-9]{1,4})");
-		for (int i = 0; i < splitsTemp.length; i++){
-	//		System.out.println(i + " | " + splitsTemp[i]);
-		}
-		
-		String[] splitAtString;
-		allDOM.split("");
-	//	splitStringAtString(java.lang.String pString, java.lang.String pDelimiter)
-	//	Splits the specified String containing the specified substring into individual Strings that were delimited by the specified substring.
-			
-	
-
-		int namesEndPos = -1;
-		int oddsPos = -1;
-		int nextNamesEndPos = -1;
-		int nextOddsPos = -1;
-		Pattern oddsPattern = Pattern.compile("([0-9]{1,4}/[0-9]{1,4})");  // insert your pattern here
-		Matcher oddsMatch = oddsPattern.matcher(allDOM);
-		if (oddsMatch.find()) {
-			oddsPos = oddsMatch.start();
-		}
-		String tmpNew = allDOM.substring(oddsPos);
-
-		System.out.println("________");
-		System.out.println("________");
-		System.out.println("________");
-		System.out.println("________");
-		System.out.println("tmpNew === " + tmpNew);
-		
-		Pattern endPattern = Pattern.compile("Draw");  // insert your pattern here
-		Matcher endMatch = endPattern.matcher(tmpNew);
-		if (endMatch.find()) {
-			namesEndPos = endMatch.start();
-		}
-		String nextNew = tmpNew.substring(0, namesEndPos);
-		System.out.println(oddsPos + "< oddsPos ||| " + nextNew + "  namesEndPos > " + namesEndPos);
-		
-		System.out.println("________");
-		System.out.println("________");
-		String nextAll = tmpNew.substring(namesEndPos);
-		System.out.println("________");
-		System.out.println("________");
-		System.err.println(nextAll + "________");
-		System.out.println("________");
-	//	String tmpName = 
-	//	allDOM.substring(oddsPos, namesEndPos);
-//	
-//		System.out.println("tmpName === " + tmpName);
-		
 		
     }
 	
@@ -218,15 +176,32 @@ public class MainActivity extends Activity
 						System.out.println("get");
 
 
-						Elements elements = doc.body().select("*");
+						Elements elementsAll = doc.body().select("*");
 						
-						
-						System.out.println("elms sz = "+ elements.size());
-						System.err.println("elms sz = "+ elements.size());
+						String elementsAllText = elementsAll.text();
 						
 						
 						
-						for (Element element : elements) {
+						System.out.println("elms sz = "+ elementsAll.size());
+						System.err.println("elms sz = "+ elementsAll.size());
+						
+						
+						String allText = doc.toString();
+						System.err.println("*********************");
+						System.out.println("*********************");
+						
+						allText = allText.replaceAll("\\s", "");
+						System.out.println(elementsAllText);
+					
+						System.out.println("*********************");
+						System.err.println("*********************");
+						
+						System.out.println("call: listMatches(elementsAllText)--nb: with white space");
+						listMatches(elementsAllText);
+						System.out.println("return: listMatches(elementsAllText)");
+						
+						
+						for (Element element : elementsAll) {
 				
 							
 		
@@ -253,7 +228,7 @@ public class MainActivity extends Activity
 							
 						String allTextElems = elemsAll.text();
 			
-						System.err.println("allTextElems ==== " + allTextElems);
+						System.err.println("0 ==== " + allTextElems);
 						
 						String namesAndOddEtc = "";
 						for (Element elementS : elemsAll) {
@@ -534,6 +509,126 @@ public class MainActivity extends Activity
 			s[1] = tmp;
 		}
 		return s;
+	}
+	
+	
+	
+	
+	ArrayList<String> matchsList = new ArrayList<String>();
+
+	private void listMatches(String DOMString){
+
+
+
+
+		int namesEndPos = -1;
+		int oddsPos = -1;
+		int nextNamesEndPos = -1;
+		int nextOddsPos = -1;
+		Pattern oddsPattern = Pattern.compile("([0-9]{1,4}/[0-9]{1,4})");  // Find odds ie. 2/11 or 99/1 etc
+		Pattern endPattern = Pattern.compile("Draw");  // Find the word "Draw". Name pairs (matches) end with this
+
+
+
+		Matcher oddsMatch = oddsPattern.matcher(DOMString);
+
+
+
+
+		if (oddsMatch.find()) {
+			oddsPos = oddsMatch.start();
+		}
+		String tmpNew = DOMString.substring(oddsPos);
+
+		
+		
+//		System.out.println("________");
+//		System.out.println("________");
+//		System.out.println("________");
+		System.out.println("________");
+		System.err.println("tmpNew === " + tmpNew);
+		System.out.println("________");
+		
+		
+		Matcher endMatch = endPattern.matcher(tmpNew);
+		if (endMatch.find()) {
+			namesEndPos = endMatch.start();
+		}
+		String nextNew = tmpNew.substring(0, namesEndPos);
+		
+		
+//		System.out.println(oddsPos + "< oddsPos ||| " + nextNew + "  namesEndPos > " + namesEndPos);
+//
+//		System.out.println("________");
+//		System.out.println("________");
+
+		
+		String nextAll = tmpNew.substring(namesEndPos);
+		
+		
+		System.out.println("________");
+		System.err.println("nxNew = " + nextNew + "____=____");
+		System.out.println("________");
+		System.err.println("nxAll = " + nextAll + "____=____");
+		System.out.println("________");
+
+
+		matchsList.add(nextNew);
+
+		//	while (namesEndPos < DOMString.length()){
+			for (int i = 0; i < 85; i++){
+
+
+			oddsMatch = oddsPattern.matcher(nextAll);
+			if (oddsMatch.find()) {
+				oddsPos = oddsMatch.start();
+				System.out.println("oddsMatch.find() : oddsPos === " + oddsPos);
+			}else{
+				System.out.println("oddsMatch.find() === " + oddsMatch.find());
+			}
+			tmpNew = nextAll.substring(oddsPos);
+
+			endMatch = endPattern.matcher(tmpNew);
+			if (endMatch.find()) {
+				namesEndPos = endMatch.start();
+			}else{
+				System.out.println("endMatch.find() === " + endMatch.find());
+				return;
+			}
+
+
+			nextNew = tmpNew.substring(0, namesEndPos);
+
+			nextAll = tmpNew.substring(namesEndPos);
+
+
+//			System.out.println("____tmpNew____");
+//			System.err.println(tmpNew + "____=____");
+//			System.out.println("___tmpNew___");
+//			System.out.println("____nxtAll____");
+//			System.err.println(nextAll + "____=____");
+//			System.out.println("___nxtAll_____");
+
+
+			matchsList.add(nextNew);
+
+		}
+
+
+
+
+
+
+		for (int i = 0; i < matchsList.size(); i++){
+			System.out.println(i + " : " + matchsList.get(i));
+		}
+
+
+		//	String tmpName = 
+		//	allDOM.substring(oddsPos, namesEndPos);
+//	
+//		System.out.println("tmpName === " + tmpName);
+
 	}
 
 }
