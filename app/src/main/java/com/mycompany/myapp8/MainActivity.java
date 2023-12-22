@@ -3,8 +3,7 @@ package com.mycompany.myapp8;
 //      https://easyodds.com/football/india/jamshedpur-v-chennaiyin/full-time-result/3638510
 
 //
-// XXX TODO Pass "allText" to localTest(); and rename
-//
+// TODO:
 // See below...
 /*
  
@@ -216,26 +215,78 @@ public class MainActivity extends Activity
 	private void buildMap(String allText){
 		ArrayList matches = new ArrayList();
 		ArrayList<String> matchesList = new ArrayList<String>();
+		ArrayList<String> resultsList = new ArrayList<String>();
+		ArrayList<String> bookiesList = new ArrayList<String>();
+		ArrayList<String> oddsList = new ArrayList<String>();
+		
+		
 		
 		String matchRegEx = "data-event-name=\"";
+		String resultRegEx = "data-selection-name=\"";
+		String bookieRegEx = "data-partner-name=\"";
+		String oddsRegEx = "data-fraction=\"";
+		
+		
+		
 		
 		System.out.println("buildList call...");
-		Log.i(TAG_INFO, "buildList call...");
-		matchesList = buildList(allText, matchRegEx);
+		Log.i(TAG_INFO, "buildMatchesList call...");
+		matchesList = buildMatchesList(allText, matchRegEx);
 	
 	//
 		int i = 0;
 		for (String m : matchesList){
+			if (i > 20){continue;}
 			System.out.println((i++) + ": matchesList = " + m);
 		}
 	//
 	
+		Log.i(TAG_INFO, "buildList(data-selection-name) call...");
+		resultsList = buildList(allText, resultRegEx);
+		
+		//
+		i = 0;
+		for (String m : resultsList){
+			if (i > 20){continue;}
+			System.out.println((i++) + ": resultsList = " + m);
+		}
+		//
+		Log.i(TAG_INFO, "buildList(bookieRegEx) call...");
+		bookiesList = buildList(allText, bookieRegEx);
+		//
+		i = 0;
+		for (String m : bookiesList){
+			if (i > 20){continue;}
+			System.out.println((i++) + ": bookiesList = " + m);
+		}
+		//
+		
+		Log.i(TAG_INFO, "buildList(data-oddsRegEx) call...");
+		oddsList = buildList(allText, oddsRegEx);
+		
+		//
+		i = 0;
+		for (String m : oddsList){
+			if (i > 20){continue;}
+			System.out.println((i++) + ": oddsList = " + m);
+		}
+		//
+	
+		Map matchesResultMap = new HashMap();
+		
+		Iterator it = matchesList.iterator();
+		int ix = 0;
+		
+		while (it.hasNext()){
+			String tmp = (String) it.next();
+		}
 		/*
 		TODO:
-		 If matchesList[0]==[1]==[2]:
-		 0: data-selection-name =>>(maps to) data-partner-name=>>data-fraction
-		 1: data-selection-name =>>(maps to) data-partner-name=>>data-fraction
-		 2: data-selection-name =>>(maps to) data-partner-name=>>data-fraction
+		 If matchesList[0]==[1]==[2]:    =>>(maps to) 
+		 	match =>> Result =>> Bookie =>> odds
+		 0: data-event-name =>>  data-selection-name =>>  data-partner-name =>>  data-fraction
+		 1: data-event-name =>>  data-selection-name =>>  data-partner-name =>>  data-fraction
+		 2: data-event-name =>>  data-selection-name =>>  data-partner-name =>>  data-fraction
 		 Repeat for matchesList[n+0]==[n+1]==[n+2]... n+=3
 		*/
 /*
@@ -259,31 +310,72 @@ public class MainActivity extends Activity
 		
 	}
 	
-	
-	
 	private ArrayList<String> buildList(String allText, String regExp) {
+
+
+
+		ArrayList<String> list = new ArrayList<String>();
+
+		
+
+		int nx = 0;
+
+		String[] splitText = allText.split(regExp);
+
+		splitText = Arrays.copyOfRange(splitText, 1, splitText.length);
+	//	System.out.println("splitText len = " + splitText.length);
+		String[] splitList = new String[splitText.length + 1];
+
+
+	//	for (String text : splitText){
+		for (String text : splitText){
+				
+
+	//		System.out.println((nx) + ": " + text);
+			
+			int end = text.indexOf("\"");
+			splitList[nx] = text.substring(0, end);
+
+	//		System.out.println((nx) + ": " + splitList[nx]);
+
+			list.add(splitList[nx]);
+
+			nx++;
+		}
+
+
+		
+
+		System.out.println("List: " + list);
+		
+
+
+
+
+		return list;
+
+	}
+	
+	
+	private ArrayList<String> buildMatchesList(String allText, String regExp) {
 	
 	
 
 		ArrayList<String> list = new ArrayList<String>();
 		
-		String regExFraction = "[0-9]*/[0-9]*";
-		String regExDataFraction = "data-fraction=\"";
-		
 		
 		int nx = 0;
 		
-	//	String[] elems2 = allText.split(regExFraction);
-	//	String[] elems2 = allText.split(regExDataFraction);
-		String[] elems2 = allText.split(regExp);
-		
-		System.out.println("elems2 len = " + elems2.length);
-		String[] splitList = new String[elems2.length + 1];
-		
-		
-		for (String splitText : elems2){
 	
-			System.out.println((nx) + ": " + splitText);
+		String[] splitText = allText.split(regExp);
+		
+		System.out.println("elems2 len = " + splitText.length);
+		String[] splitList = new String[splitText.length + 1];
+		
+		
+		for (String text : splitText){
+	
+			System.out.println((nx) + ": " + text);
 	
 			/*
 			TODO:
@@ -298,7 +390,7 @@ public class MainActivity extends Activity
 			if (regExp == "data-event-name=\""){
 				String market = "data-market-name=\"";
 		//		String[]
-				marketText = splitText.split(market);
+				marketText = text.split(market);
 			}
 //			System.out.println("s[]=" + marketText);
 //			for (String ss : marketText){
@@ -316,8 +408,8 @@ public class MainActivity extends Activity
 		//		nx++; 
 		//		continue;
 			}
-			int end = splitText.indexOf("\"");
-			splitList[nx] = splitText.substring(0, end);
+			int end = text.indexOf("\"");
+			splitList[nx] = text.substring(0, end);
 	
 	//		System.out.println((nx) + ": " + oddsFractionList[nx]);
 	
