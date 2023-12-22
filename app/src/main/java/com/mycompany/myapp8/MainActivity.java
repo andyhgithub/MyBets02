@@ -234,51 +234,106 @@ public class MainActivity extends Activity
 		matchesList = buildMatchesList(allText, matchRegEx);
 	
 	//
-		int i = 0;
-		for (String m : matchesList){
-			if (i > 20){continue;}
-			System.out.println((i++) + ": matchesList = " + m);
-		}
+//		int i = 0;
+//		for (String m : matchesList){
+//			if (i > 20){continue;}
+//			System.out.println((i++) + ": matchesList = " + m);
+//		}
 	//
 	
 		Log.i(TAG_INFO, "buildList(data-selection-name) call...");
 		resultsList = buildList(allText, resultRegEx);
 		
 		//
-		i = 0;
-		for (String m : resultsList){
-			if (i > 20){continue;}
-			System.out.println((i++) + ": resultsList = " + m);
-		}
+//		i = 0;
+//		for (String m : resultsList){
+//			if (i > 20){continue;}
+//			System.out.println((i++) + ": resultsList = " + m);
+//		}
 		//
 		Log.i(TAG_INFO, "buildList(bookieRegEx) call...");
 		bookiesList = buildList(allText, bookieRegEx);
 		//
-		i = 0;
-		for (String m : bookiesList){
-			if (i > 20){continue;}
-			System.out.println((i++) + ": bookiesList = " + m);
-		}
+//		i = 0;
+//		for (String m : bookiesList){
+//			if (i > 20){continue;}
+//			System.out.println((i++) + ": bookiesList = " + m);
+//		}
 		//
 		
 		Log.i(TAG_INFO, "buildList(data-oddsRegEx) call...");
 		oddsList = buildList(allText, oddsRegEx);
 		
 		//
-		i = 0;
-		for (String m : oddsList){
-			if (i > 20){continue;}
-			System.out.println((i++) + ": oddsList = " + m);
-		}
+//		i = 0;
+//		for (String m : oddsList){
+//			if (i > 20){continue;}
+//			System.out.println((i++) + ": oddsList = " + m);
+//		}
 		//
 	
-		Map matchesResultMap = new HashMap();
+		Map<String, String> matchesResultsMap = new HashMap<String, String>();
+		Map<String, String> resultsBookiesMap = new HashMap<String, String>();
+		Map<String, String> bookiesOddsMap = new HashMap<String, String>();
 		
-		Iterator it = matchesList.iterator();
+		Iterator matchesIt = matchesList.iterator();
+		Iterator resultsIt = resultsList.iterator();
+		Iterator bookiesIt = bookiesList.iterator();
+		Iterator oddsIt = oddsList.iterator();
 		int ix = 0;
 		
-		while (it.hasNext()){
-			String tmp = (String) it.next();
+		while (matchesIt.hasNext()){
+			String tmp1 = (String) matchesIt.next();
+			String tmp2 = "";
+			if (matchesIt.hasNext()){
+				tmp2 = (String) matchesIt.next();
+			}else{
+				break;
+			}
+			String tmp3 = "";
+			if (matchesIt.hasNext()){
+				tmp3 = (String) matchesIt.next();
+			}else{
+				break;
+			}
+			
+			if (tmp1.equals(tmp2) && tmp2.equals(tmp3)){
+				String nextResult = (String) resultsIt.next();
+				matchesResultsMap.put(tmp1, nextResult);
+				String nextBookie = (String)  bookiesIt.next();
+				resultsBookiesMap.put(nextResult, nextBookie);
+				String nextodds = (String)  oddsIt.next();
+				bookiesOddsMap.put(nextBookie, nextodds);
+				
+				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+				
+				nextResult = (String) resultsIt.next();
+				matchesResultsMap.put(tmp2, nextResult);
+				nextBookie = (String)  bookiesIt.next();
+				resultsBookiesMap.put(nextResult, nextBookie);
+				nextodds = (String)  oddsIt.next();
+				bookiesOddsMap.put(nextBookie, nextodds);
+
+
+				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+				
+				
+				nextResult = (String) resultsIt.next();
+				matchesResultsMap.put(tmp3, nextResult);
+				nextBookie = (String)  bookiesIt.next();
+				resultsBookiesMap.put(nextResult, nextBookie);
+				nextodds = (String)  oddsIt.next();
+				bookiesOddsMap.put(nextBookie, nextodds);
+				
+
+				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+				System.out.println("____");
+			}
+			
+//			showMap(matchesResultsMap);
+//			showMap(resultsBookiesMap);
+//			showMap(bookiesOddsMap);
+			
 		}
 		/*
 		TODO:
@@ -971,6 +1026,17 @@ public class MainActivity extends Activity
 		}
 
 		return ret;
+	}
+	
+	
+	private void showMap(Map map){
+
+		for (Map.Entry<String,String> entry : map.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+			System.out.println(key + " > " + value);
+		}
+		
 	}
 
 }
