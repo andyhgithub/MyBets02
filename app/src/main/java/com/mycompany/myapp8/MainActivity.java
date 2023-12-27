@@ -6,8 +6,7 @@ package com.mycompany.myapp8;
 // TODO:
 // See below...
 /*
- 
- 
+ xxx xxx
 */
 //
 //You can use any Web Scraper/Crawler API to fetch data from web site.
@@ -63,62 +62,46 @@ import android.content.Context;
 
 public class MainActivity extends Activity
 {
+	private Map<String, String> matchesResultsMap = new HashMap<String, String>();
+	
+	private Map<String, ArrayList<String>> matchesResultsMap2 = new HashMap<String, ArrayList<String>>();
+	
+	private Map<String, String> resultsBookiesMap = new HashMap<String, String>();
+	private Map<String, String> bookiesOddsMap = new HashMap<String, String>();
+	
 
-	Context context = this;
-	String[] splitsTemp; // = new String[0];
-
-	final static String  allDOM = " Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search " +
-	"Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports " +
-	"Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker " +
-									"Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & " +
-	"UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce " +
-	"HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor " +
-	"SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange" +
-	"English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India " +
-	"Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time " +
-	"Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska" +
-	"{ GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time" +
-	"(US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), " +
-	"Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic " +
-	"{ GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, " +
-	"Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg " +
-	"{ GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent " +
-	"{ GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon" +
-	"{ GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, " +
-	"Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. " +
-	"{ GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc " +
-	"{ EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble " +
-	"{ SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions " +
-	"LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar " +
-	"1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro " +
-	"2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback " +
-	"is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad " +
-	"Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at " +
-	"odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 " +
-	"Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set " +
-									"markets, which expire after 7 days. Offer valid from 12:00 UK";
-	// allTextElems ==== Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska { GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time (US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic { GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg { GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent { GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon { GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. { GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc { EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble { SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar 1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro 2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set markets, which expire after 7 days. Offer valid from 12:00 UK";
+	private ArrayList<String> matchesList = new ArrayList<String>();
+	private ArrayList<String> resultsList = new ArrayList<String>();
+	private ArrayList<String> bookiesList = new ArrayList<String>();
+	private ArrayList<String> oddsList = new ArrayList<String>();
+	
+	
+	private Context context = this;
 	
 	
 	private static final String TAG_INFO = "info:..";
 	private Elements elementsAll;
-	private Elements elementsAllChildren = new Elements();
 	
     private TextView result;
     private Button fetch;
 
-
+	private StringBuilder builder = new StringBuilder();
+	
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         result = (TextView) findViewById(R.id.result);
 		result.setMovementMethod(new ScrollingMovementMethod());
-
-        fetch = (Button) findViewById(R.id.fetch);
+		result.setTextIsSelectable(true);
+	
+	
+	    fetch = (Button) findViewById(R.id.fetch);
 		
 		
-	//	localTest();
+	
 		
 		
 		
@@ -140,7 +123,6 @@ public class MainActivity extends Activity
 		
     }
 	
-	StringBuilder builder = new StringBuilder();
 	
     private void getBodyText() {
         new Thread(new Runnable() {
@@ -151,11 +133,7 @@ public class MainActivity extends Activity
 
 
 					
-					Double a[] = {2d,2d,2d};
-
-
-
-
+					
 					try {
 						//			String url="https://www.oddschecker.com/football/english/premier-league/brighton-v-liverpool/winner";//your website url
 
@@ -167,7 +145,8 @@ public class MainActivity extends Activity
 						url = "https://easyodds.com/";
 						url = "https://easyodds.com/football";
 
-						// https://easyodds.com/
+						url = "https://easyodds.com/football/premier-league";
+						
 						
 						
 						Connection con = Jsoup.connect(url);
@@ -182,12 +161,23 @@ public class MainActivity extends Activity
 						Document doc = con.get();
 						System.out.println("get");
 						Log.i(TAG_INFO, "Get Document");
+					
+						
+						// Select all elements with nnn/nnn... eg. 1/2, 99/1, 27/4 etc.
+						elementsAll = doc.body().select("*:matches(^[0-9]*/[0-9]*$)");
+
+
+						String allAsText = listChildren(elementsAll);
+						
+						buildMap(allAsText);
+						
+						
 						builder = calcOdds(doc);
 
 					} catch (IOException e) {
 
 
-						builder.append("IOException: " + e.getMessage());
+				//		builder.append("IOException: " + e.getMessage());
 
 						Log.e(TAG_INFO, e.getMessage());
 						Log.i(TAG_INFO, "Attempt to read Document from File");
@@ -198,7 +188,7 @@ public class MainActivity extends Activity
 	
 						buildMap(readString);
 						
-						
+						buildText();
 					}
 
 					runOnUiThread(new Runnable() {
@@ -211,14 +201,53 @@ public class MainActivity extends Activity
 			}).start();
     }
 	
+	private void buildText(){
+		System.out.println("matchesList.size() = " + matchesList.size());
+		System.out.println("resultsList.size() = " + resultsList.size());
+		System.out.println("bookiesList.size() = " + bookiesList.size());
+		System.out.println("oddsList.size() = " + oddsList.size());
+		
+		System.out.println("matchesResultsMap.size() = " + matchesResultsMap.size());
+		System.out.println("matchesResultsMap2.size() = " + matchesResultsMap2.size());
+		System.out.println("resultsBookiesMap.size() = " + resultsBookiesMap.size());
+		System.out.println("bookiesOddsMap.size() = " + bookiesOddsMap.size());
+		
+		System.out.println("matchesList: " + matchesList);
+		System.out.println("resultsList: " + resultsList);
+		System.out.println("bookiesList: " + bookiesList);
+		System.out.println("oddsList: " + oddsList);
+		
+		for (int i = 0; i < matchesList.size(); i+=3){
+			String match = matchesList.get(i);
+	//		matchesResultsMap.containsKey(match);
+			ArrayList<String> results = matchesResultsMap2.get(match);
+			
+			System.out.println(match + ": " + results);
+			
+			String[] oddsx3 = new String[3];
+			oddsx3[0] = results.get(2);
+			oddsx3[1] = results.get(5);
+			oddsx3[2] = results.get(8);
+			
+			System.out.println(oddsx3[0] + ", " + oddsx3[1] + ", " + oddsx3[2]);
+			
+			builder.append(match + ": \n\n");
+			builder.append(results.get(0) + " win: " + results.get(2) + " (" + results.get(1) + ")\n");
+			builder.append(results.get(3) + " win: " + results.get(5) + " (" + results.get(4) + ")\n");
+			builder.append(results.get(6) + " win: " + results.get(8) + " (" + results.get(7) + ")\n\n\n");
+			
+			testOdds(oddsx3);
+			builder.append("____________________________________________\n");
+		}
+	}
 	
 	private void buildMap(String allText){
-		ArrayList matches = new ArrayList();
-		ArrayList<String> matchesList = new ArrayList<String>();
-		ArrayList<String> resultsList = new ArrayList<String>();
-		ArrayList<String> bookiesList = new ArrayList<String>();
-		ArrayList<String> oddsList = new ArrayList<String>();
 		
+//		ArrayList<String> matchesList = new ArrayList<String>();
+//		ArrayList<String> resultsList = new ArrayList<String>();
+//		ArrayList<String> bookiesList = new ArrayList<String>();
+//		ArrayList<String> oddsList = new ArrayList<String>();
+//		
 		
 		
 		String matchRegEx = "data-event-name=\"";
@@ -233,48 +262,22 @@ public class MainActivity extends Activity
 		Log.i(TAG_INFO, "buildMatchesList call...");
 		matchesList = buildMatchesList(allText, matchRegEx);
 	
-	//
-//		int i = 0;
-//		for (String m : matchesList){
-//			if (i > 20){continue;}
-//			System.out.println((i++) + ": matchesList = " + m);
-//		}
-	//
-	
 		Log.i(TAG_INFO, "buildList(data-selection-name) call...");
 		resultsList = buildList(allText, resultRegEx);
-		
-		//
-//		i = 0;
-//		for (String m : resultsList){
-//			if (i > 20){continue;}
-//			System.out.println((i++) + ": resultsList = " + m);
-//		}
 		//
 		Log.i(TAG_INFO, "buildList(bookieRegEx) call...");
 		bookiesList = buildList(allText, bookieRegEx);
 		//
-//		i = 0;
-//		for (String m : bookiesList){
-//			if (i > 20){continue;}
-//			System.out.println((i++) + ": bookiesList = " + m);
-//		}
-		//
-		
 		Log.i(TAG_INFO, "buildList(data-oddsRegEx) call...");
 		oddsList = buildList(allText, oddsRegEx);
+		//
 		
-		//
-//		i = 0;
-//		for (String m : oddsList){
-//			if (i > 20){continue;}
-//			System.out.println((i++) + ": oddsList = " + m);
-//		}
-		//
-	
-		Map<String, String> matchesResultsMap = new HashMap<String, String>();
-		Map<String, String> resultsBookiesMap = new HashMap<String, String>();
-		Map<String, String> bookiesOddsMap = new HashMap<String, String>();
+		
+		
+		
+		String[] oddsx3 = new String[3];
+		String[] bookiesx3 = new String[3];
+		
 		
 		Iterator matchesIt = matchesList.iterator();
 		Iterator resultsIt = resultsList.iterator();
@@ -283,6 +286,8 @@ public class MainActivity extends Activity
 		int ix = 0;
 		
 		while (matchesIt.hasNext()){
+			ArrayList<String> results = new ArrayList<String>();
+			
 			String tmp1 = (String) matchesIt.next();
 			String tmp2 = "";
 			if (matchesIt.hasNext()){
@@ -296,38 +301,96 @@ public class MainActivity extends Activity
 			}else{
 				break;
 			}
+			int vix = tmp1.indexOf(" v ");
+			String teamA = (String) tmp1.subSequence(0, vix);
+			String teamB = (String) tmp1.subSequence((vix + 3), tmp1.length());
+		
+		//	System.out.println("teamA = " + teamA + ", teamB = " + teamB);
+		
+			
 			
 			if (tmp1.equals(tmp2) && tmp2.equals(tmp3)){
+				
+//				oddsx3[0] = tmp1;
+//				oddsx3[1] = tmp2;
+//				oddsx3[2] = tmp3;
+				
+				boolean isMatch = false;
+				
 				String nextResult = (String) resultsIt.next();
 				matchesResultsMap.put(tmp1, nextResult);
+				results.add(nextResult);
+				
+				
+				isMatch = teamA.equals(nextResult);
+		//		System.out.println(teamA + "=?=" + nextResult);
+				
 				String nextBookie = (String)  bookiesIt.next();
 				resultsBookiesMap.put(nextResult, nextBookie);
 				String nextodds = (String)  oddsIt.next();
 				bookiesOddsMap.put(nextBookie, nextodds);
 				
-				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+				bookiesx3[0] = nextBookie;
+				oddsx3[0] = nextodds;
+				results.add(nextBookie);
+				results.add(nextodds);
+//				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+//				System.out.println(teamA + "=?=" + nextResult + (teamA.equals(nextResult)));
 				
 				nextResult = (String) resultsIt.next();
 				matchesResultsMap.put(tmp2, nextResult);
+				results.add(nextResult);
+				
+				
+				if (isMatch){
+					isMatch = (teamB.equals(nextResult));
+				}
+		//		System.out.println(teamB + "=?=" + nextResult + (teamB.equals(nextResult)));
+				
+					
 				nextBookie = (String)  bookiesIt.next();
 				resultsBookiesMap.put(nextResult, nextBookie);
 				nextodds = (String)  oddsIt.next();
 				bookiesOddsMap.put(nextBookie, nextodds);
 
-
-				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+				bookiesx3[1] = nextBookie;
+				oddsx3[1] = nextodds;
+				results.add(nextBookie);
+				results.add(nextodds);
+		//		System.out.println(tmp2 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
 				
 				
 				nextResult = (String) resultsIt.next();
 				matchesResultsMap.put(tmp3, nextResult);
+				results.add(nextResult);
+				
+				
+
+				if (isMatch){
+					isMatch = (nextResult.equals("Draw"));
+				}
+		//		System.out.println("Draw" + "=?=" + nextResult + (nextResult.equals("Draw")));
+				
+				
+				
 				nextBookie = (String)  bookiesIt.next();
 				resultsBookiesMap.put(nextResult, nextBookie);
 				nextodds = (String)  oddsIt.next();
 				bookiesOddsMap.put(nextBookie, nextodds);
 				
-
-				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
-				System.out.println("____");
+				bookiesx3[2] = nextBookie;
+				oddsx3[2] = nextodds;
+				results.add(nextBookie);
+				results.add(nextodds);
+				
+				if (isMatch){
+					matchesResultsMap2.put(tmp1, results);
+				}
+				
+				System.out.println(isMatch + ":" + tmp1 + " > " +results);
+//				System.out.println(tmp3 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
+//				System.out.print("____" + testOdds(oddsx3));
+//				System.out.println("____");
 			}
 			
 //			showMap(matchesResultsMap);
@@ -336,31 +399,6 @@ public class MainActivity extends Activity
 			
 		}
 		/*
-		TODO:
-		 If matchesList[0]==[1]==[2]:    =>>(maps to) 
-		 	match =>> Result =>> Bookie =>> odds
-		 0: data-event-name =>>  data-selection-name =>>  data-partner-name =>>  data-fraction
-		 1: data-event-name =>>  data-selection-name =>>  data-partner-name =>>  data-fraction
-		 2: data-event-name =>>  data-selection-name =>>  data-partner-name =>>  data-fraction
-		 Repeat for matchesList[n+0]==[n+1]==[n+2]... n+=3
-		*/
-/*
-		 data-event-name="Rennes v Villarreal" 
-		 data-market-name="Full Time Result" 
-		 data-selection-name="Rennes" 
-		 data-partner-name="10Bet" 
-		 data-fraction="11/10" data-decimal="2.10"> 11/10 </span> | 1 <|||> 4 : <span class="side-odds eo-oddsButton" data-sport-id="6" data-selection-id="13603342536" data-market-id="23" data-event-id="3627821" data-partner-id="452" 
-		 data-event-name="Rennes v Villarreal" 
-		 data-market-name="Full Time Result"
-		 data-selection-name="Villarreal" 
-		 data-partner-name="PariMatch" 
-		 data-fraction="27/10" data-decimal="3.70"> 27/10 </span> | 1 <|||> 5 : <span class="draw-odds eo-oddsButton" data-sport-id="6" data-selection-id="13598016986" data-market-id="23" data-event-id="3627821" data-partner-id="13" 
-		 data-event-name="Rennes v Villarreal" 
-		 data-market-name="Full Time Result" 
-		 data-selection-name="Draw" 
-		 data-partner-name="bet365" 
-		 data-fraction="14/5" data-decimal="3.80"> 14/5 </span> | 1 <|||> 6 : <span class="side-odds eo-oddsButton" data-sport-id="6" data-selection-id="13600071172" data-market-id="23" data-event-id="3627822" data-partner-id="41" 
-		 
 */
 		
 	}
@@ -568,9 +606,7 @@ public class MainActivity extends Activity
 		System.err.println("namesAndOddEtc === " + namesAndOddEtc);
 
 
-		System.out.println("allDOM === " + allDOM);
-		System.err.println("allDOM === " + allDOM);
-
+		
 		String readString = readFromFile(context);
 		System.out.println("readString===" + readString);
 
@@ -632,10 +668,10 @@ public class MainActivity extends Activity
 //								System.err.print(element.ownText() + "=element.ownText() String ==" + s);
 //								System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
 
-				System.out.print(ix + "ix ===" + n);
-
-				System.err.print(element.ownText() + "=element.ownText() String ==" + s);
-				System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
+//				System.out.print(ix + "ix ===" + n);
+//
+//				System.err.print(element.ownText() + "=element.ownText() String ==" + s);
+//				System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
 
 				n++;	
 			}
@@ -685,6 +721,8 @@ public class MainActivity extends Activity
 			if (win2 > win1){
 				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
+				
 
 			}
 			builder.append((s[0] + "|||" + s[1] + "|||" + s[2])).append("\n");
@@ -695,7 +733,8 @@ public class MainActivity extends Activity
 			if (win2 > win1){
 				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
+				
 			}
 
 
@@ -936,8 +975,8 @@ public class MainActivity extends Activity
 		return matchsList;
 	}
 	
-	private Elements kidsE;
-	private Elements allE;
+	//private Elements kidsE;
+	//private Elements allE;
 	private int totalEs = 0;
 	private StringBuilder allText = new StringBuilder();
 	private StringBuilder allText2 = new StringBuilder();
@@ -949,36 +988,36 @@ public class MainActivity extends Activity
 		Iterator elementsIter = origPage.iterator();
 		while (elementsIter.hasNext()){
 			Element currentElem = (Element) elementsIter.next();
-			allE = currentElem.getAllElements();
-			kidsE = currentElem.children();
+		//	allE = currentElem.getAllElements();
+	//		kidsE = currentElem.children();
 			
-			elementsAllChildren.addAll(allE);
+	//		elementsAllChildren.addAll(allE);
 			
-			currentBitofText = currentElem.text();
-			allText.append(currentBitofText);
-			
+//			currentBitofText = currentElem.text();
+//			allText.append(currentBitofText);
+//			
 			Elements tmp = currentElem.getAllElements();
 			currentBitofText = tmp.outerHtml();
 			allText2.append(currentBitofText);
 			
-			currentBitofText = currentElem.html();		
-			allText3.append(currentBitofText);
+//			currentBitofText = currentElem.html();		
+//			allText3.append(currentBitofText);
 			
 //			System.out.println((count) + ": getAllElements.size === " + allE.size() + 
 //							   " ||| children.size === " + kidsE.size());
-			totalEs += allE.size();
+//			totalEs += allE.size();
+//			
+//			System.out.print(count + " : " + allE + " | " + allE.size() + " <|||running total-> " + totalEs);
+//			count++;
+//			if (count % 10 == 0){
+//				System.out.println("__________");
+//			}
 			
-			System.out.print(count + " : " + allE + " | " + allE.size() + " <|||running total-> " + totalEs);
-			count++;
-			if (count % 10 == 0){
-				System.out.println("__________");
 			}
-			
-			}
-		System.out.println(count + " < count : total n of Elements:" + totalEs);
-		System.out.println("allText: " + allText);
-		System.out.println("allText2: " + allText2);
-		System.out.println("allText3: " + allText3);
+//		System.out.println(count + " < count : total n of Elements:" + totalEs);
+//		System.out.println("allText: " + allText);
+//		System.out.println("allText2: " + allText2);
+//		System.out.println("allText3: " + allText3);
 		
 		return allText2.toString();
 	}
@@ -1038,6 +1077,148 @@ public class MainActivity extends Activity
 		}
 		
 	}
+	
+	
+	private boolean testOdds(String[] oddsString){
+		
+	//	StringBuilder builder = new StringBuilder();
+
+		String[] temps = oddsString;
+		Double[] tempd = new Double[3];
+		List<Double[]> trips = new ArrayList<Double[]>();
+		List<String[]> oddsList = new ArrayList<String[]>();
+	
+		int n = 0;
+		
+		for (String s : temps){
+	
+			double r = 0;
+	
+			if (!s.isEmpty()){
+				r = parse(s);
+				int ix = n % 3;
+				if (ix==0){
+					temps = new String[3];
+					tempd = new Double[3];
+					temps[0] = s;
+					tempd[0] = r;
+				}
+				if (ix==1){
+					temps[1] = s;
+					tempd[1] = r;
+				}
+				if (ix==2){
+					temps[2] = s;
+					tempd[2] = r;
+					Arrays.sort(tempd);
+					trips.add(tempd);
+					temps = sortOdds(temps);
+					oddsList.add(temps);
+				}
+				n++;	
+			}
+
+
+		}
+		double win1 = 0.0d;
+		double win2 = 0.0d;
+
+		for (int i = 0; i < trips.size();i++) 
+		{ 		      
+			//		System.out.println(trips.get(i)); 	
+			Double[] t = trips.get(i);
+			String[] s = oddsList.get(i);
+			double min = t[0];
+			double oddsl = t[1];
+			double oddsh = t[2];
+			double winMin = 100 * min;
+			double totStake = 100 + winMin;
+			double tot = winMin / (oddsl +  oddsh);
+			double stakel = oddsl * tot;
+			double stakeh = oddsh * tot;
+
+			double stake1 = totStake / (1 + oddsl);
+			double stake2 = totStake - 100 - stake1;
+
+			win1 = (1 + oddsl) * stake1;
+			win2 = (1 + oddsh) * stake2;
+
+			double winA = stakel * (1 + oddsh);
+			double winB = stakeh * (1 + oddsl);
+
+
+
+
+//							System.out.println(t[0] + "|||" + t[1] + "|||" + t[2]);
+//							System.out.println(s[0] + "|||" + s[1] + "|||" + s[2]);
+//
+//							System.out.println("100.00"  + "|||" + stake1 + "|||" + stake2);
+//									System.out.println(winMin  + "|||" + winA + "|||" + winB);
+//							System.out.println(winMin  + "|||" + win1 + "|||" + win2);
+//							System.out.println("____________________");
+//
+
+			int stake1tmp = (int) (100 * stake1);
+			int stake2tmp =  (int)(100 * stake2);
+			double stake1rnd = (double) stake1tmp / 100;
+			double stake2rnd = (double) stake2tmp / 100;
+			
+			int win1tmp = (int) (100 * win1);
+			int win2tmp = (int) (100 * win2);
+			double win1rnd = (double) win1tmp / 100;
+			double win2rnd = (double) win2tmp / 100;
+			
+			int winMintmp = (int) (100 * winMin);
+			double winMinrnd = (double) winMintmp / 100;
+			
+/*
+			 4/9|||47/10|||7/1
+			 100.00|||25.3411306042885|||19.103313840155955
+			 44.44444444444444|||144.44444444444446|||152.82651072124764
+*/
+
+
+			if (win2 > win1){
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n\n");
+				
+			}
+			builder.append("At " + s[0] + " bet 100.00 and win " + (winMinrnd + 100)).append("\n");
+			builder.append("At " + s[1] + " bet " + stake1rnd + " and win " + (win1rnd)).append("\n");
+			builder.append("At " + s[2] + " bet " + stake2rnd + " and win " + (win2rnd)).append("\n");
+			builder.append("Total staked: " + (stake1rnd + stake2rnd + 100));
+			if (win2 > win1){
+				builder.append(" with a possable return of " + win2rnd).append("\n");
+			}else{
+				builder.append("\n These are not great odds").append("\n");
+			}
+			
+//			builder.append((s[0] + "|||" + s[1] + "|||" + s[2])).append("\n");
+//			builder.append(("100.00"  + "|||" + stake1 + "|||" + stake2)).append("\n");
+//			builder.append((winMin  + "|||" + win1 + "|||" + win2)).append("\n");
+//			builder.append(("____________________"+totStake)).append("\n");
+
+			if (win2 > win1){
+				builder.append("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
+				
+				
+			}
+
+
+
+		}   
+		
+		return (win2 > win1);
+
+		
+	//	return builder;
+
+	
+	}
+	
+	
+	
 
 }
 
@@ -1205,9 +1386,517 @@ data-fraction="39/5" data-decimal="8.80"> 39/5 </span> | 1 <|||> 12 : <span clas
 
 */
 
+/*
+17/20|||3/1|||31/10
+100.00|||46.25|||38.75
+85.0|||185.0|||158.875
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$23/14|||19/10|||27/10
+100.00|||91.13300492610837|||73.15270935960591
+164.28571428571428|||264.2857142857143|||270.6650246305419
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$8/11|||3/1|||17/4
+100.00|||43.18181818181819|||29.54545454545456
+72.72727272727273|||172.72727272727275|||155.11363636363643
+____________________
+7/10|||10/3|||41/10
+100.00|||39.230769230769226|||30.769230769230774
+70.0|||170.0|||156.92307692307693
+____________________
+8/5|||11/6|||13/5
+100.00|||91.76470588235296|||68.23529411764704
+160.0|||260.0|||245.64705882352936
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$23/14|||19/10|||27/10
+100.00|||91.13300492610837|||73.15270935960591
+164.28571428571428|||264.2857142857143|||270.6650246305419
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$7/10|||10/3|||41/10
+100.00|||39.230769230769226|||30.769230769230774
+70.0|||170.0|||156.92307692307693
+____________________
+8/11|||3/1|||17/4
+100.00|||43.18181818181819|||29.54545454545456
+72.72727272727273|||172.72727272727275|||155.11363636363643
+____________________
+9/10|||16/5|||16/5
+100.00|||45.238095238095234|||44.761904761904766
+90.0|||190.0|||188.00000000000003
+____________________
+8/5|||11/6|||13/5
+100.00|||91.76470588235296|||68.23529411764704
+160.0|||260.0|||245.64705882352936
+____________________
+3/2|||2/1|||53/20
+100.00|||83.33333333333333|||66.66666666666667
+150.0|||250.0|||243.33333333333334
+____________________
+17/20|||3/1|||31/10
+100.00|||46.25|||38.75
+85.0|||185.0|||158.875
+____________________
+5/4|||23/10|||53/20
+100.00|||68.18181818181819|||56.81818181818181
+125.0|||225.0|||207.38636363636363
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$13/12|||11/4|||3/1
+100.00|||55.55555555555555|||52.777777777777764
+108.33333333333333|||208.33333333333331|||211.11111111111106
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$11/10|||13/5|||53/20
+100.00|||58.33333333333333|||51.66666666666667
+110.00000000000001|||210.0|||188.58333333333334
+____________________
+19/16|||23/10|||13/5
+100.00|||66.2878787878788|||52.462121212121204
+118.75|||218.75000000000003|||188.86363636363635
+____________________
+5/6|||14/5|||41/10
+100.00|||48.245614035087726|||35.08771929824562
+83.33333333333334|||183.33333333333334|||178.94736842105263
+____________________
+8/5|||2/1|||5/2
+100.00|||86.66666666666667|||73.33333333333333
+160.0|||260.0|||256.66666666666663
+____________________
+1/6|||38/5|||20/1
+100.00|||13.565891472868216|||3.100775193798441
+16.666666666666664|||116.66666666666666|||65.11627906976726
+____________________
+6/4|||21/10|||23/10
+100.00|||80.64516129032258|||69.35483870967742
+150.0|||250.0|||228.8709677419355
+____________________
+3/5|||33/10|||5/1
+100.00|||37.2093023255814|||22.790697674418603
+60.0|||160.0|||136.74418604651163
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$8/13|||7/2|||11/2
+100.00|||35.8974358974359|||25.64102564102565
+61.53846153846154|||161.53846153846155|||166.6666666666667
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$8/7|||5/2|||3/1
+100.00|||61.224489795918366|||53.06122448979591
+114.28571428571428|||214.28571428571428|||212.24489795918365
+____________________
+23/18|||9/4|||12/5
+100.00|||70.08547008547008|||57.69230769230769
+127.77777777777777|||227.77777777777774|||196.15384615384616
+____________________
+6/5|||23/10|||13/5
+100.00|||66.66666666666667|||53.33333333333333
+120.0|||220.0|||192.0
+____________________
+4/7|||7/2|||6/1
+100.00|||34.92063492063492|||22.22222222222222
+57.14285714285714|||157.14285714285714|||155.55555555555554
+____________________
+23/18|||11/5|||13/5
+100.00|||71.18055555555554|||56.59722222222223
+127.77777777777777|||227.77777777777774|||203.75000000000003
+____________________
+10/13|||3/1|||10/3
+100.00|||44.23076923076923|||32.6923076923077
+76.92307692307693|||176.92307692307693|||141.6666666666667
+____________________
+11/19|||10/3|||5/1
+100.00|||36.43724696356275|||21.45748987854251
+57.89473684210527|||157.89473684210526|||128.74493927125508
+____________________
+7/19|||21/5|||8/1
+100.00|||26.31578947368421|||10.526315789473681
+36.84210526315789|||136.8421052631579|||94.73684210526314
+____________________
+13/10|||43/20|||12/5
+100.00|||73.01587301587301|||56.98412698412699
+130.0|||229.99999999999997|||193.74603174603175
+____________________
+8/13|||16/5|||47/10
+100.00|||38.46153846153846|||23.076923076923087
+61.53846153846154|||161.53846153846155|||131.5384615384616
+____________________
+17/20|||11/4|||17/5
+100.00|||49.333333333333336|||35.666666666666664
+85.0|||185.0|||156.93333333333334
+____________________
+1/2|||39/10|||6/1
+100.00|||30.612244897959183|||19.387755102040817
+50.0|||150.0|||135.71428571428572
+____________________
+4/3|||2/1|||5/2
+100.00|||77.77777777777777|||55.55555555555554
+133.33333333333331|||233.33333333333331|||194.4444444444444
+____________________
+7/5|||41/20|||27/10
+100.00|||78.68852459016394|||61.31147540983606
+140.0|||240.0|||226.85245901639345
+____________________
+8/13|||7/2|||9/2
+100.00|||35.8974358974359|||25.64102564102565
+61.53846153846154|||161.53846153846155|||141.02564102564108
+____________________
+11/8|||19/10|||13/5
+100.00|||81.89655172413794|||55.603448275862064
+137.5|||237.5|||200.17241379310343
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$3/4|||57/20|||5/1
+100.00|||45.45454545454545|||29.545454545454547
+75.0|||175.0|||177.27272727272728
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$10/13|||13/5|||19/4
+100.00|||49.14529914529915|||27.777777777777786
+76.92307692307693|||176.92307692307693|||159.72222222222226
+____________________
+9/5|||11/6|||21/10
+100.00|||98.82352941176471|||81.17647058823529
+180.0|||280.0|||251.64705882352942
+____________________
+7/5|||9/4|||23/10
+100.00|||73.84615384615384|||66.15384615384616
+140.0|||239.99999999999997|||218.30769230769232
+____________________
+1/4|||11/2|||13/1
+100.00|||19.23076923076923|||5.76923076923077
+25.0|||125.0|||80.76923076923077
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2/1|||2/1|||21/10
+100.00|||100.0|||100.0
+200.0|||300.0|||310.0
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$7/4|||19/10|||9/4
+100.00|||94.82758620689656|||80.17241379310344
+175.0|||275.0|||260.5603448275862
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$8/11|||3/1|||5/1
+100.00|||43.18181818181819|||29.54545454545456
+72.72727272727273|||172.72727272727275|||177.27272727272737
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$1/1|||12/5|||7/2
+100.00|||58.82352941176471|||41.17647058823529
+100.0|||200.0|||185.2941176470588
+____________________
+1/11|||10/1|||39/1
+100.00|||9.917355371900827|||-0.8264462809917337
+9.090909090909092|||109.0909090909091|||-33.05785123966935
+____________________
+7/4|||9/5|||23/10
+100.00|||98.21428571428572|||76.78571428571428
+175.0|||275.0|||253.3928571428571
+____________________
+13/20|||3/1|||43/10
+100.00|||41.25|||23.75
+65.0|||165.0|||125.875
+____________________
+13/10|||11/5|||13/5
+100.00|||71.875|||58.125
+130.0|||230.0|||209.25
+____________________
+10/13|||57/20|||10/3
+100.00|||45.95404595404596|||30.969030969030975
+76.92307692307693|||176.92307692307693|||134.19913419913425
+____________________
+19/20|||57/20|||3/1
+100.00|||50.64935064935065|||44.35064935064935
+95.0|||195.0|||177.4025974025974
+____________________
+6/5|||9/4|||13/5
+100.00|||67.6923076923077|||52.30769230769231
+120.0|||220.0|||188.30769230769232
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$307/100|||631/100|||6424/25
+100.00|||55.67715458276334|||251.32284541723666
+307.0|||407.0|||64831.24120383037
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2/1|||6/1|||183/4
+100.00|||42.857142857142854|||157.14285714285714
+200.0|||300.0|||7346.428571428572
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5/2|||3/1|||20/1
+100.00|||87.5|||162.5
+250.0|||350.0|||3412.5
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+*/
+
+
+
+/*
+17/20|||3/1|||16/5
+100.00|||46.25|||38.75
+85.0|||185.0|||162.75
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$23/14|||21/10|||27/10
+100.00|||85.25345622119815|||79.03225806451613
+164.28571428571428|||264.2857142857143|||292.4193548387097
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$3/4|||3/1|||17/4
+100.00|||43.75|||31.25
+75.0|||175.0|||164.0625
+____________________
+7/10|||10/3|||41/10
+100.00|||39.230769230769226|||30.769230769230774
+70.0|||170.0|||156.92307692307693
+____________________
+8/5|||15/8|||13/5
+100.00|||90.43478260869566|||69.56521739130434
+160.0|||260.0|||250.43478260869566
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$23/14|||21/10|||27/10
+100.00|||85.25345622119815|||79.03225806451613
+164.28571428571428|||264.2857142857143|||292.4193548387097
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$3/4|||3/1|||17/4
+100.00|||43.75|||31.25
+75.0|||175.0|||164.0625
+____________________
+8/5|||15/8|||13/5
+100.00|||90.43478260869566|||69.56521739130434
+160.0|||260.0|||250.43478260869566
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$9/10|||10/3|||15/4
+100.00|||43.84615384615384|||46.15384615384616
+90.0|||190.0|||219.23076923076925
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$7/10|||10/3|||41/10
+100.00|||39.230769230769226|||30.769230769230774
+70.0|||170.0|||156.92307692307693
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$13/8|||2/1|||53/20
+100.00|||87.5|||75.0
+162.5|||262.5|||273.75
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$17/20|||3/1|||16/5
+100.00|||46.25|||38.75
+85.0|||185.0|||162.75
+____________________
+19/16|||23/10|||13/5
+100.00|||66.2878787878788|||52.462121212121204
+118.75|||218.75000000000003|||188.86363636363635
+____________________
+3/5|||33/10|||5/1
+100.00|||37.2093023255814|||22.790697674418603
+60.0|||160.0|||136.74418604651163
+____________________
+8/5|||2/1|||5/2
+100.00|||86.66666666666667|||73.33333333333333
+160.0|||260.0|||256.66666666666663
+____________________
+1/6|||38/5|||20/1
+100.00|||13.565891472868216|||3.100775193798441
+16.666666666666664|||116.66666666666666|||65.11627906976726
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$13/12|||11/4|||16/5
+100.00|||55.55555555555555|||52.777777777777764
+108.33333333333333|||208.33333333333331|||221.66666666666663
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$11/10|||13/5|||53/20
+100.00|||58.33333333333333|||51.66666666666667
+110.00000000000001|||210.0|||188.58333333333334
+____________________
+6/4|||21/10|||23/10
+100.00|||80.64516129032258|||69.35483870967742
+150.0|||250.0|||228.8709677419355
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5/6|||14/5|||17/4
+100.00|||48.245614035087726|||35.08771929824562
+83.33333333333334|||183.33333333333334|||184.21052631578948
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5/4|||23/10|||53/20
+100.00|||68.18181818181819|||56.81818181818181
+125.0|||225.0|||207.38636363636363
+____________________
+3/5|||7/2|||11/2
+100.00|||35.55555555555556|||24.444444444444443
+60.0|||160.0|||158.88888888888889
+____________________
+7/19|||21/5|||8/1
+100.00|||26.31578947368421|||10.526315789473681
+36.84210526315789|||136.8421052631579|||94.73684210526314
+____________________
+13/10|||43/20|||12/5
+100.00|||73.01587301587301|||56.98412698412699
+130.0|||229.99999999999997|||193.74603174603175
+____________________
+11/19|||10/3|||5/1
+100.00|||36.43724696356275|||21.45748987854251
+57.89473684210527|||157.89473684210526|||128.74493927125508
+____________________
+8/13|||16/5|||47/10
+100.00|||38.46153846153846|||23.076923076923087
+61.53846153846154|||161.53846153846155|||131.5384615384616
+____________________
+10/13|||3/1|||7/2
+100.00|||44.23076923076923|||32.6923076923077
+76.92307692307693|||176.92307692307693|||147.11538461538464
+____________________
+6/5|||23/10|||13/5
+100.00|||66.66666666666667|||53.33333333333333
+120.0|||220.0|||192.0
+____________________
+4/7|||7/2|||6/1
+100.00|||34.92063492063492|||22.22222222222222
+57.14285714285714|||157.14285714285714|||155.55555555555554
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$8/7|||13/5|||3/1
+100.00|||59.52380952380952|||54.76190476190476
+114.28571428571428|||214.28571428571428|||219.04761904761904
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$23/18|||9/4|||12/5
+100.00|||70.08547008547008|||57.69230769230769
+127.77777777777777|||227.77777777777774|||196.15384615384616
+____________________
+23/18|||11/5|||13/5
+100.00|||71.18055555555554|||56.59722222222223
+127.77777777777777|||227.77777777777774|||203.75000000000003
+____________________
+7/5|||41/20|||27/10
+100.00|||78.68852459016394|||61.31147540983606
+140.0|||240.0|||226.85245901639345
+____________________
+1/2|||39/10|||6/1
+100.00|||30.612244897959183|||19.387755102040817
+50.0|||150.0|||135.71428571428572
+____________________
+11/8|||19/10|||13/5
+100.00|||81.89655172413794|||55.603448275862064
+137.5|||237.5|||200.17241379310343
+____________________
+4/3|||21/10|||5/2
+100.00|||75.26881720430107|||58.06451612903224
+133.33333333333331|||233.33333333333334|||203.22580645161284
+____________________
+8/13|||7/2|||19/4
+100.00|||35.8974358974359|||25.64102564102565
+61.53846153846154|||161.53846153846155|||147.4358974358975
+____________________
+17/20|||11/4|||17/5
+100.00|||49.333333333333336|||35.666666666666664
+85.0|||185.0|||156.93333333333334
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$3/4|||57/20|||5/1
+100.00|||45.45454545454545|||29.545454545454547
+75.0|||175.0|||177.27272727272728
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$9/5|||11/6|||21/10
+100.00|||98.82352941176471|||81.17647058823529
+180.0|||280.0|||251.64705882352942
+____________________
+10/13|||13/5|||5/1
+100.00|||49.14529914529915|||27.777777777777786
+76.92307692307693|||176.92307692307693|||166.6666666666667
+____________________
+7/5|||9/4|||23/10
+100.00|||73.84615384615384|||66.15384615384616
+140.0|||239.99999999999997|||218.30769230769232
+____________________
+1/4|||27/5|||13/1
+100.00|||19.53125|||5.46875
+25.0|||125.0|||76.5625
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2/1|||2/1|||21/10
+100.00|||100.0|||100.0
+200.0|||300.0|||310.0
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$8/11|||3/1|||5/1
+100.00|||43.18181818181819|||29.54545454545456
+72.72727272727273|||172.72727272727275|||177.27272727272737
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$7/4|||9/5|||23/10
+100.00|||98.21428571428572|||76.78571428571428
+175.0|||275.0|||253.3928571428571
+____________________
+1/11|||10/1|||39/1
+100.00|||9.917355371900827|||-0.8264462809917337
+9.090909090909092|||109.0909090909091|||-33.05785123966935
+____________________
+1/1|||5/2|||7/2
+100.00|||57.142857142857146|||42.857142857142854
+100.0|||200.0|||192.85714285714283
+____________________
+7/4|||19/10|||9/4
+100.00|||94.82758620689656|||80.17241379310344
+175.0|||275.0|||260.5603448275862
+____________________
+8/11|||12/5|||7/2
+100.00|||50.802139037433165|||21.925133689839583
+72.72727272727273|||172.72727272727275|||98.66310160427813
+____________________
+13/20|||3/1|||43/10
+100.00|||41.25|||23.75
+65.0|||165.0|||125.875
+____________________
+4/5|||57/20|||16/5
+100.00|||46.75324675324675|||33.24675324675325
+80.0|||180.0|||139.63636363636365
+____________________
+13/10|||11/5|||13/5
+100.00|||71.875|||58.125
+130.0|||230.0|||209.25
+____________________
+19/20|||57/20|||3/1
+100.00|||50.64935064935065|||44.35064935064935
+95.0|||195.0|||177.4025974025974
+____________________
+1/3|||9/2|||8/1
+100.00|||24.24242424242424|||9.090909090909076
+33.33333333333333|||133.33333333333331|||81.81818181818169
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$307/100|||631/100|||6424/25
+100.00|||55.67715458276334|||251.32284541723666
+307.0|||407.0|||64831.24120383037
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$2/1|||6/1|||183/4
+100.00|||42.857142857142854|||157.14285714285714
+200.0|||300.0|||7346.428571428572
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$5/2|||3/1|||20/1
+100.00|||87.5|||162.5
+250.0|||350.0|||3412.5
+____________________
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+*/
 
 
 
 
+
+
+
+
+
+//	final static String  allDOM = " Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search " +
+//	"Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports " +
+//	"Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker " +
+//									"Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & " +
+//	"UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce " +
+//	"HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor " +
+//	"SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange" +
+//	"English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India " +
+//	"Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time " +
+//	"Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska" +
+//	"{ GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time" +
+//	"(US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), " +
+//	"Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic " +
+//	"{ GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, " +
+//	"Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg " +
+//	"{ GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent " +
+//	"{ GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon" +
+//	"{ GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, " +
+//	"Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. " +
+//	"{ GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc " +
+//	"{ EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble " +
+//	"{ SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions " +
+//	"LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar " +
+//	"1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro " +
+//	"2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback " +
+//	"is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad " +
+//	"Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at " +
+//	"odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 " +
+//	"Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set " +
+//									"markets, which expire after 7 days. Offer valid from 12:00 UK";
+	// allTextElems ==== Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska { GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time (US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic { GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg { GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent { GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon { GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. { GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc { EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble { SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar 1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro 2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set markets, which expire after 7 days. Offer valid from 12:00 UK";
+	
+// allTextElems ==== Sports Casino EasyOdds sports Home Betting Tips All Sports Free Bets Search Football HomeTournamentsTeamsFootball TipsLive StreamingShow All Home Betting Tips All Sports Free Bets Search EasyOdds sports EasyOddsCasino Home Betting Tips Free Bets Promo Codes Bookmaker Reviews Betting Guides Live Streaming Browse by Sports FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules FootballHorse RacingTennisBoxing & UFCCricketGolfDartsSpecialsRugby UnionRugby LeagueUS FootballSnookerMotor SportBasketballBaseballCyclingHandballIce HockeyAussie Rules Odds format Fractional Decimal American Location United KingdomChange English, GMT, GBP Apply Cancel Changes Location (see Odds and Offers for) Australia Austria Brazil Finland Germany Greece India Ireland Italy Kenya New Zealand Nigeria Norway Poland Russia South Africa Spain Sweden Switzerland United Kingdom World Time Zone Select a timezone { GMT-12:00 International Date Line West { GMT-11:00 Midway Island, Samoa { GMT-10:00 Hawaii { GMT-9:00 Alaska { GMT-8:00 Pacific Time (US & Canada), Tijuana { GMT-7:00 Arizona, Mountain Time (US & Canada), Chihuahua, M... { GMT-6:00 Central Time (US & Canada), Central America, Guada... { GMT-5:00 Eastern Time (US & Canada), Indiana (East), Bogota... { GMT-4:00 Atlantic Time (Canada), Caracas, La Paz, Santiago { GMT-3:30 Newfoundland { GMT-3:00 Brasilia, Buenos Aires, Georgetown, Greenland { GMT-2:00 Mid-Atlantic { GMT-1:00 Azores, Cape Verde Is. { GMT Dublin, Edinburgh, London, Lisbon, Monrovia { GMT+1:00 Amsterdam, Berlin, Brussels, Madrid, Paris, Rome,... { GMT+2:00 Athens, Bucharest, Cairo, Helsinki, Istanbul, Mins... { GMT+3:00 Baghdad, Kuwait, Moscow, Nairobi, St. Petersburg { GMT+3:30 Tehran { GMT+4:00 Abu Dhabi, Baku, Muscat, Tbilisi, Yerevan { GMT+4:30 Kabul { GMT+5:00 Ekaterinburg, Islamabad, Karachi, Tashkent { GMT+5:30 Chennai, Kolkata, Mumbai, New Delhi { GMT+5:45 Kathmandu { GMT+6:00 Almaty, Astana, Dhaka, Novosibirsk, Sri Jayawarden... { GMT+6:30 Rangoon { GMT+7:00 Bangkok, Hanoi, Jakarta, Krasnoyarsk { GMT+8:00 Beijing, Chongqing, Hong Kong, Kuala Lumpur, Perth... { GMT+9:00 Osaka, Sapporo, Seoul, Tokyo, Yakutsk { GMT+9:30 Adelaide, Darwin { GMT+10:00 Brisbane, Canberra, Guam, Hobart, Melbourne, Port... { GMT+11:00 Magadan, New Caledonia, Solomon Is. { GMT+12:00 Auckland, Fiji, Kamchatka, Marshall Is., Wellingto... { GMT+13:00 Nuku'alofa Currency { AUD Australian Dollar { BRL Brazilian Real { CHF Swiss Franc { EUR Euro { GBP Pound Sterling { INR Indian Rupee { KES Kenyan Shilling { NGN Nigerian Naira { NOK Norwegian Krone { PLN Polish Zloty { RUB Russian Ruble { SEK Swedish Krona { USD US Dollar { ZAR South African Rand Apply Cancel Changes Football Betting Odds Premier LeagueChampionshipEuro 2024UEFA Champions LeagueLa LigaBundesligaSee All Tournaments Featured Matches Today / 19:45 Euro 2024 5/1 Greece 8/13 France 3/1 Draw Today / 19:45 Euro 2024 90/1 Gibraltar 1/100 Netherlands 40/1 Draw Today / 19:45 Euro 2024 1/6 Croatia 18/1 Armenia 7/1 Draw Today / 19:45 Euro 2024 6/4 Wales 2/1 Turkey 5/2 Draw Today / 19:45 Euro 2024 11/4 Romania 21/20 Switzerland 5/2 Draw Today's Offers 10% Cashback on ALL Losses Sign up and place a bet to earn 10% cashback on any lost bets. Cashback is cash without restrictions. No Max cashout. New18+ customers only. T&Cs apply. Gambling can be addictive, please play responsibly. BeGambleAware.org. #ad Claim Offer Bet £10. Get £30 in FREE Bets 18+ New customers only. Opt in, bet £10 at odds 2.00+ within 7 days, no cashout. Get 6x £5 Free Bets, set events at odds 2.00+. 7 day bonus expiry. Debit Card / Apple Pay payments only. T&Cs apply. Gamble Responsibly. BeGambleAware.org. #ad Claim Offer Football - Bet £10 Get £30 18+ New customers only. Opt in, and bet £10 on football markets (odds 2.00+). No cash out. Get 6x£5 football free bets at specified odds for set markets, which expire after 7 days. Offer valid from 12:00 UK";
+	
 
 
