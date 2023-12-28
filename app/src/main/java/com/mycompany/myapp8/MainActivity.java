@@ -1,29 +1,12 @@
 package com.mycompany.myapp8;
 
-//      https://easyodds.com/football/india/jamshedpur-v-chennaiyin/full-time-result/3638510
 
-//
-// TODO:
-// See below...
-/*
- xxx xxx
-*/
-//
-//You can use any Web Scraper/Crawler API to fetch data from web site.
-//
-//For example: JSOUP API For Java And Android
-//
-//Update
-//
-//Step By Step guide to solve the mentioned problem
-//
-//Add Jsoup dependency to the app level of your build.gradle.
-//implementation 'org.jsoup:jsoup:1.11.1'
-//
+
 //Add Internet permission to the Android Manifest file for internet access.
 //<uses-permission android:name="android.permission.INTERNET" />
 //
-//Add button and text view in your app to get data from website on button click and display the result on text view.
+//Add button and text view in your app to get data from website on button click
+//and display the result on text view.
 //Below is the sample code:
 //
 
@@ -49,16 +32,11 @@ import java.util.*;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
-
-
-//import org.apache.commons.*;
-
-//import org.apache.commons.lang3.StringUtils;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import android.util.*;
 import android.content.Context;
-// import core.util.StringUtils;
+
 
 public class MainActivity extends Activity
 {
@@ -128,24 +106,27 @@ public class MainActivity extends Activity
         new Thread(new Runnable() {
 				@Override
 				public void run() {
-		//			StringBuilder builder = new StringBuilder();
-
-
-
-					
+		
 					
 					try {
-						//			String url="https://www.oddschecker.com/football/english/premier-league/brighton-v-liverpool/winner";//your website url
-
-						//		String url="https://www.poetryfoundation.org/poems/48860/the-raven";//your website url
+						
 						String url;
 						url="https://www.oddschecker.com/";// NB: oddschecker seems to have anti-scraping shit: Workaround pain in arse
-						url = "https://www.oddschecker.com/cheltenham-festival";
+						
 
 						url = "https://easyodds.com/";
-						url = "https://easyodds.com/football";
-
-						url = "https://easyodds.com/football/premier-league";
+						url = "https://easyodds.com/football";			
+						url = "https://easyodds.com/football/championship";		
+				//		url = 	"https://easyodds.com/football/la-liga";
+				//		url = "https://easyodds.com/football/premier-league";
+						url = "https://easyodds.com/football/serie-a";
+						url = "https://easyodds.com/football/serie-b";
+						url = "https://easyodds.com/football/serie-c";
+						url = "https://easyodds.com/football/serie-d";
+						
+						url = "xxxxxxxx";
+						
+						url = "https://easyodds.com/football/uefa-champions-league";
 						
 						
 						
@@ -153,6 +134,9 @@ public class MainActivity extends Activity
 						System.out.println("CCOnn");
 						Log.i(TAG_INFO, "Connection");
 
+						builder.append("Connecting to " + url + "\n");
+						
+						
 						con.ignoreHttpErrors(true);
 						System.out.println("ignor");
 						Log.i(TAG_INFO, "Ignor http errors");
@@ -162,6 +146,8 @@ public class MainActivity extends Activity
 						System.out.println("get");
 						Log.i(TAG_INFO, "Get Document");
 					
+						builder.append("Got page..."  + "\n");
+						
 						
 						// Select all elements with nnn/nnn... eg. 1/2, 99/1, 27/4 etc.
 						elementsAll = doc.body().select("*:matches(^[0-9]*/[0-9]*$)");
@@ -169,18 +155,28 @@ public class MainActivity extends Activity
 
 						String allAsText = listChildren(elementsAll);
 						
-						buildMap(allAsText);
+				
 						
+						elementsAll = doc.body().select("*:matches(^[0-9]*/[0-9]*$)");
+						writeToFile(allAsText, context);
 						
-						builder = calcOdds(doc);
+		
+						String readString = readFromFile(context);
+				
 
+
+						buildMap(readString);
+
+						buildText();
 					} catch (IOException e) {
 
 
-				//		builder.append("IOException: " + e.getMessage());
+				
 
 						Log.e(TAG_INFO, e.getMessage());
 						Log.i(TAG_INFO, "Attempt to read Document from File");
+						builder.append("Failed to fetch page" + "\n");
+						builder.append("Attempt to read Document from File" + "\n");
 						
 						String readString = readFromFile(context);
 						System.out.println("readString===" + readString);
@@ -202,24 +198,24 @@ public class MainActivity extends Activity
     }
 	
 	private void buildText(){
-		System.out.println("matchesList.size() = " + matchesList.size());
-		System.out.println("resultsList.size() = " + resultsList.size());
-		System.out.println("bookiesList.size() = " + bookiesList.size());
-		System.out.println("oddsList.size() = " + oddsList.size());
-		
-		System.out.println("matchesResultsMap.size() = " + matchesResultsMap.size());
-		System.out.println("matchesResultsMap2.size() = " + matchesResultsMap2.size());
-		System.out.println("resultsBookiesMap.size() = " + resultsBookiesMap.size());
-		System.out.println("bookiesOddsMap.size() = " + bookiesOddsMap.size());
-		
-		System.out.println("matchesList: " + matchesList);
-		System.out.println("resultsList: " + resultsList);
-		System.out.println("bookiesList: " + bookiesList);
-		System.out.println("oddsList: " + oddsList);
+//		System.out.println("matchesList.size() = " + matchesList.size());
+//		System.out.println("resultsList.size() = " + resultsList.size());
+//		System.out.println("bookiesList.size() = " + bookiesList.size());
+//		System.out.println("oddsList.size() = " + oddsList.size());
+//		
+//		System.out.println("matchesResultsMap.size() = " + matchesResultsMap.size());
+//		System.out.println("matchesResultsMap2.size() = " + matchesResultsMap2.size());
+//		System.out.println("resultsBookiesMap.size() = " + resultsBookiesMap.size());
+//		System.out.println("bookiesOddsMap.size() = " + bookiesOddsMap.size());
+//		
+//		System.out.println("matchesList: " + matchesList);
+//		System.out.println("resultsList: " + resultsList);
+//		System.out.println("bookiesList: " + bookiesList);
+//		System.out.println("oddsList: " + oddsList);
 		
 		for (int i = 0; i < matchesList.size(); i+=3){
 			String match = matchesList.get(i);
-	//		matchesResultsMap.containsKey(match);
+	
 			ArrayList<String> results = matchesResultsMap2.get(match);
 			
 			System.out.println(match + ": " + results);
@@ -243,13 +239,7 @@ public class MainActivity extends Activity
 	
 	private void buildMap(String allText){
 		
-//		ArrayList<String> matchesList = new ArrayList<String>();
-//		ArrayList<String> resultsList = new ArrayList<String>();
-//		ArrayList<String> bookiesList = new ArrayList<String>();
-//		ArrayList<String> oddsList = new ArrayList<String>();
-//		
-		
-		
+
 		String matchRegEx = "data-event-name=\"";
 		String resultRegEx = "data-selection-name=\"";
 		String bookieRegEx = "data-partner-name=\"";
@@ -311,75 +301,51 @@ public class MainActivity extends Activity
 			
 			if (tmp1.equals(tmp2) && tmp2.equals(tmp3)){
 				
-//				oddsx3[0] = tmp1;
-//				oddsx3[1] = tmp2;
-//				oddsx3[2] = tmp3;
-				
 				boolean isMatch = false;
 				
 				String nextResult = (String) resultsIt.next();
 				matchesResultsMap.put(tmp1, nextResult);
-				results.add(nextResult);
-				
+				results.add(nextResult);	
 				
 				isMatch = teamA.equals(nextResult);
-		//		System.out.println(teamA + "=?=" + nextResult);
-				
+					
 				String nextBookie = (String)  bookiesIt.next();
 				resultsBookiesMap.put(nextResult, nextBookie);
 				String nextodds = (String)  oddsIt.next();
 				bookiesOddsMap.put(nextBookie, nextodds);
 				
-				bookiesx3[0] = nextBookie;
-				oddsx3[0] = nextodds;
 				results.add(nextBookie);
 				results.add(nextodds);
-//				System.out.println(tmp1 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
-//				System.out.println(teamA + "=?=" + nextResult + (teamA.equals(nextResult)));
-				
+//				
 				nextResult = (String) resultsIt.next();
 				matchesResultsMap.put(tmp2, nextResult);
 				results.add(nextResult);
 				
-				
 				if (isMatch){
 					isMatch = (teamB.equals(nextResult));
 				}
-		//		System.out.println(teamB + "=?=" + nextResult + (teamB.equals(nextResult)));
-				
 					
 				nextBookie = (String)  bookiesIt.next();
 				resultsBookiesMap.put(nextResult, nextBookie);
 				nextodds = (String)  oddsIt.next();
 				bookiesOddsMap.put(nextBookie, nextodds);
-
-				bookiesx3[1] = nextBookie;
-				oddsx3[1] = nextodds;
+			
 				results.add(nextBookie);
 				results.add(nextodds);
-		//		System.out.println(tmp2 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
-				
-				
+			
 				nextResult = (String) resultsIt.next();
 				matchesResultsMap.put(tmp3, nextResult);
 				results.add(nextResult);
 				
-				
-
 				if (isMatch){
 					isMatch = (nextResult.equals("Draw"));
-				}
-		//		System.out.println("Draw" + "=?=" + nextResult + (nextResult.equals("Draw")));
-				
-				
+				}			
 				
 				nextBookie = (String)  bookiesIt.next();
 				resultsBookiesMap.put(nextResult, nextBookie);
 				nextodds = (String)  oddsIt.next();
 				bookiesOddsMap.put(nextBookie, nextodds);
 				
-				bookiesx3[2] = nextBookie;
-				oddsx3[2] = nextodds;
 				results.add(nextBookie);
 				results.add(nextodds);
 				
@@ -388,62 +354,31 @@ public class MainActivity extends Activity
 				}
 				
 				System.out.println(isMatch + ":" + tmp1 + " > " +results);
-//				System.out.println(tmp3 + " > " + nextResult + " > " + nextBookie + " > " + nextodds);
-//				System.out.print("____" + testOdds(oddsx3));
-//				System.out.println("____");
 			}
-			
-//			showMap(matchesResultsMap);
-//			showMap(resultsBookiesMap);
-//			showMap(bookiesOddsMap);
-			
+						
 		}
-		/*
-*/
 		
 	}
 	
 	private ArrayList<String> buildList(String allText, String regExp) {
 
-
-
 		ArrayList<String> list = new ArrayList<String>();
 
-		
-
 		int nx = 0;
-
 		String[] splitText = allText.split(regExp);
-
 		splitText = Arrays.copyOfRange(splitText, 1, splitText.length);
-	//	System.out.println("splitText len = " + splitText.length);
+	
 		String[] splitList = new String[splitText.length + 1];
 
-
-	//	for (String text : splitText){
 		for (String text : splitText){
-				
-
-	//		System.out.println((nx) + ": " + text);
 			
 			int end = text.indexOf("\"");
 			splitList[nx] = text.substring(0, end);
-
-	//		System.out.println((nx) + ": " + splitList[nx]);
-
 			list.add(splitList[nx]);
-
 			nx++;
 		}
 
-
-		
-
 		System.out.println("List: " + list);
-		
-
-
-
 
 		return list;
 
@@ -452,321 +387,43 @@ public class MainActivity extends Activity
 	
 	private ArrayList<String> buildMatchesList(String allText, String regExp) {
 	
-	
-
-		ArrayList<String> list = new ArrayList<String>();
-		
-		
+		ArrayList<String> list = new ArrayList<String>();	
 		int nx = 0;
-		
-	
-		String[] splitText = allText.split(regExp);
-		
-		System.out.println("elems2 len = " + splitText.length);
+		String[] splitText = allText.split(regExp);	
+	System.out.println("elems2 len = " + splitText.length);
 		String[] splitList = new String[splitText.length + 1];
-		
 		
 		for (String text : splitText){
 	
-			System.out.println((nx) + ": " + text);
+	System.out.println((nx) + ": " + text);
 	
-			/*
-			TODO:
-			Check:
-			After " immeadiatly followed by...
-			 " data-market-name="Full Time Result" 
-			else skip (continue;) loop
-			
-			Also repeats?
-			*/
 			String[] marketText = new String[2];
 			if (regExp == "data-event-name=\""){
 				String market = "data-market-name=\"";
-		//		String[]
 				marketText = text.split(market);
 			}
-//			System.out.println("s[]=" + marketText);
-//			for (String ss : marketText){
-//				System.out.println("s[[]=" + ss);
-//			}
-	//		System.out.println("s[1]=" + marketText[marketText.length - 1]);
+
 			if (!marketText[marketText.length - 1].startsWith("Full Time Result")){
-				System.out.println("s[1]=" + marketText[marketText.length - 1]);
-				
+		System.out.println("s[1]=" + marketText[marketText.length - 1]);
 				continue;
 			}
 			
-			
-			if (nx == 0){
-		//		nx++; 
-		//		continue;
-			}
 			int end = text.indexOf("\"");
 			splitList[nx] = text.substring(0, end);
-	
-	//		System.out.println((nx) + ": " + oddsFractionList[nx]);
 	
 			list.add(splitList[nx]);
 			
 			nx++;
 		}
 		
-		
-		System.out.format("oddsFractionList === [%s]\n", splitList);
-		System.out.println("oddsFractionList === " + splitList);
-		System.out.format("oddsFractionList === [%s]\n", splitList);
-		
-//		for (String fracs : splitList){
-//	//		System.out.println("fraca=" + fracs);
-//		}
-		
 		System.out.println("List: " + list);
-		for (String s : list){
-	//		System.out.println(s);
-		}
 		
-		
-		
-
 		return list;
 
 	}
+
+	private double parse(String ratio) {
 	
-	
-	
-	
-	
-	
-	StringBuilder calcOdds(Document doc){
-		
-		StringBuilder builder = new StringBuilder();
-		
-		
-		String[] temps = new String[3];
-		Double[] tempd = new Double[3];
-		List<Double[]> trips = new ArrayList<Double[]>();
-		List<String[]> odds = new ArrayList<String[]>();
-		
-		
-
-		elementsAll = doc.body().select("*");
-		elementsAll = doc.body().select("*:matches(^[0-9]*/[0-9]*$)");
-
-
-		String allAsText = listChildren(elementsAll);
-		writeToFile(allAsText, context);
-
-		String elementsAllText = elementsAll.text();
-
-
-
-		System.out.println("elms sz = "+ elementsAll.size());
-		System.err.println("elms sz = "+ elementsAll.size());
-
-
-//						String allText = doc.toString();
-//						System.err.println("*********************");
-//						System.out.println("*********************");
-//						
-//						allText = allText.replaceAll("\\s", "");
-//						System.out.println(elementsAllText);
-//					
-//						System.out.println("*********************");
-//						System.err.println("*********************");
-
-		System.out.println("call: listMatches(elementsAllText)--nb: with white space");
-		listMatches(elementsAllText);
-		System.out.println("return: listMatches(elementsAllText)");
-
-
-
-
-		int nix = 0;
-
-		Elements elemsAll = doc.body().select("*:matches(Italy)");
-		//	Elements elemsAll = doc.body().select("*:matches(Italy)");
-		//		Elements elemSingle = doc.body().select("*:matches(Serbia)");
-		//			Elements elemSingle = doc.body().select("*:matches(Armenia)");
-
-
-		//	elemsAll[18] = "";
-
-
-		elemsAll.size();
-
-
-
-		String allTextElems = elemsAll.text();
-
-		System.err.println("0 ==== " + allTextElems);
-
-		String namesAndOddEtc = "";
-		
-
-		System.err.println("namesAndOddEtc === " + namesAndOddEtc);
-
-
-		
-		String readString = readFromFile(context);
-		System.out.println("readString===" + readString);
-
-
-		Element names = doc.select("className.side-name").first();
-		// div with class=masthead
-
-
-
-		//			Elements elems2 = doc.body().select("*:contains(d)");
-		//		Elements elems2 = doc.body().select("*:matches(/)");
-		//		Elements elems2 = doc.body().select("*:matches([0-9]/|(Draw))");
-		//	Elements elems2 = doc.body().select("*:matches(^[0-9]*/[0-9]*$|(Draw))");
-		Elements elems2 = doc.body().select("*:matches(^[0-9]*/[0-9]*$)");
-
-
-		int nx = 0;
-		for (Element elementOdds : elems2) {
-			String s = elementOdds.ownText();
-			//				System.out.println((nx++) + " | " + s);
-		}
-
-
-		int n = 0;
-//						temps = new String[3];
-//						tempd = new Double[3];
-		for (Element element : elems2) {
-
-			double r = 0;
-			String s = element.ownText();
-//							temps = new String[3];
-//							tempd = new Double[3];
-			if (!s.isEmpty()){
-				r = parse(s);
-				int ix = n % 3;
-				if (ix==0){
-					temps = new String[3];
-					tempd = new Double[3];
-					temps[0] = s;
-					tempd[0] = r;
-				}
-				if (ix==1){
-					temps[1] = s;
-					tempd[1] = r;
-				}
-				if (ix==2){
-					temps[2] = s;
-					tempd[2] = r;
-					Arrays.sort(tempd);
-					trips.add(tempd);
-					temps = sortOdds(temps);
-					odds.add(temps);
-				}
-
-
-
-//								System.out.print(ix + "ix ===" + n);
-//						
-//								System.err.print(element.ownText() + "=element.ownText() String ==" + s);
-//								System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
-
-//				System.out.print(ix + "ix ===" + n);
-//
-//				System.err.print(element.ownText() + "=element.ownText() String ==" + s);
-//				System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
-
-				n++;	
-			}
-
-
-		}
-
-		for (int i = 0; i < trips.size();i++) 
-		{ 		      
-			//		System.out.println(trips.get(i)); 	
-			Double[] t = trips.get(i);
-			String[] s = odds.get(i);
-			double min = t[0];
-			double oddsl = t[1];
-			double oddsh = t[2];
-			double winMin = 100 * min;
-			double totStake = 100 + winMin;
-			double tot = winMin / (oddsl +  oddsh);
-			double stakel = oddsl * tot;
-			double stakeh = oddsh * tot;
-
-			double stake1 = totStake / (1 + oddsl);
-			double stake2 = totStake - 100 - stake1;
-
-			double win1 = (1 + oddsl) * stake1;
-			double win2 = (1 + oddsh) * stake2;
-
-			double winA = stakel * (1 + oddsh);
-			double winB = stakeh * (1 + oddsl);
-
-
-
-
-//							System.out.println(t[0] + "|||" + t[1] + "|||" + t[2]);
-//							System.out.println(s[0] + "|||" + s[1] + "|||" + s[2]);
-//
-//							System.out.println("100.00"  + "|||" + stake1 + "|||" + stake2);
-//									System.out.println(winMin  + "|||" + winA + "|||" + winB);
-//							System.out.println(winMin  + "|||" + win1 + "|||" + win2);
-//							System.out.println("____________________");
-//
-
-
-
-
-
-			if (win2 > win1){
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
-				
-
-			}
-			builder.append((s[0] + "|||" + s[1] + "|||" + s[2])).append("\n");
-			builder.append(("100.00"  + "|||" + stake1 + "|||" + stake2)).append("\n");
-			builder.append((winMin  + "|||" + win1 + "|||" + win2)).append("\n");
-			builder.append(("____________________")).append("\n");
-
-			if (win2 > win1){
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
-				
-			}
-
-
-
-		}   
-
-		//	Document doc = Jsoup.connect(url).get();
-
-		//		Element body = doc.body();
-		//		builder.append(body.text());
-
-
-		//		Document doc = Jsoup.connect("https://stackoverflow.com/questions/11970938/java-html-parser-to-extract-specific-data").get();
-		//		Elements spans = doc.select("span[class=hidden-text]");
-		//		for (Element span: spans) {
-		//			System.out.println(span.text());
-		//		}
-
-
-//		Element body = doc.body();
-
-		//		builder.append("b.xxx");
-		//		builder.append(body.text());
-
-		//		System.out.println(body.text());
-		
-		return builder;
-		
-	}
-
-	double parse(String ratio) {
-	//	System.out.println("ratio to parse === " + ratio);
 		if (ratio.contains("/")) {
 			String[] rat = ratio.split("/");
 			return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
@@ -796,88 +453,23 @@ public class MainActivity extends Activity
 	
 	
 	
-	
-	
 	private ArrayList<String> listMatches(String DOMString){
 
 		ArrayList<String> matchsList = new ArrayList<String>();
 		
-
-
 		int namesEndPos = -1;
 		int oddsPos = -1;
-		int nextNamesEndPos = -1;
-		int nextOddsPos = -1;
+		
 		Pattern oddsPattern = Pattern.compile("([0-9]{1,4}/[0-9]{1,4})");  // Find odds ie. 2/11 or 99/1 etc
 		Pattern endPattern = Pattern.compile("Draw");  // Find the word "Draw". Name pairs (matches) end with this
-
-		Pattern urlFindPattern = Pattern.compile("1");  // XXXX-= Find the word "Draw". Name pairs (matches) end with this
-		Matcher urlMatch = urlFindPattern.matcher(elementsAll.text());
-		
-
-		Pattern hrefPattern = Pattern.compile("href");  // XXXX-= Find the word "Draw". Name pairs (matches) end with this
-		Matcher hrefMatch = hrefPattern.matcher(elementsAll.text());
-		
-		
-		System.out.println("...  hrefMatch.toString..." + hrefMatch.toString());
-		
-		
-		
-//		
-////		System.out.println(elementsAll.ownText() + "===" + urlMatch.);
-////		System.out.println("... element.id())..." + urlMatch..id());
-////		System.out.println("... element.tagName())..." + urlMatch.tag);
-////		System.out.println("... element.tag())..." + elementsAll.tag());
-////		System.out.println("... element.className())..." + urlMatch.classNames.className());
-		System.out.println("... element.data())..." + urlMatch.toString());
-//	//	System.out.println("... element.cssSelector())..." + urlMatch.group());   //.cssSelector());
-//		System.out.println("... element.attributes())..." + urlMatch.groupCount());    //.attributes());
-//		System.out.println("... element.classNames())..." + urlMatch.hasAnchoringBounds());    //.classNames());
-//		System.out.println("... element.text())..." + urlMatch.end());    //.text());
-//		System.out.println("... element.ownText())..." + urlMatch.find());    //.ownText());
-//		System.out.println("... element.nodeName())..." + urlMatch.hitEnd());    //.nodeName());
-//
-//		System.out.println("... element.outerHtml())..." + urlMatch.lookingAt());    //.outerHtml());
-//		System.out.println("... element.hasText())..." + urlMatch.matches());    //.hasText());
-//		System.out.println("... element.hasText())..." + urlMatch.pattern());    //.hasText());
-//
-//		System.out.println("... element.text().length(.." + urlMatch.regionEnd());    //.text().length());
-//		System.out.println("... element.text().length(.." + urlMatch.regionStart());    //.text().length());
-//		System.out.println("... element.text().length(.." + urlMatch.requireEnd());    //.text().length());
-//		System.out.println("... element.text().length(.." + urlMatch.start());    //.text().length());
-//		System.out.println("... element.text().length(.." + urlMatch.toMatchResult());    //.text().length());
-//		System.out.println("... element.text().length(.." + urlMatch.toString());    //.text().length());
-//	//	System.out.println("... element.text().length(.." + urlMatch.regionStart());    //.text().length());
-//		
-//		
-//		
-//		
-//		System.out.println("... element.text().length(.." + urlMatch.reset());    //.text().length());
-//		
-//	//	 System.out.println(element.ownText() + "===" + r);
-//		 
-		
-		
-		
-		
-		
-		
-		
+	
 		Matcher oddsMatch = oddsPattern.matcher(DOMString);
-
-
-
-
+		
 		if (oddsMatch.find()) {
 			oddsPos = oddsMatch.start();
 		}
 		String tmpNew = DOMString.substring(oddsPos);
 
-		
-		
-//		System.out.println("________");
-//		System.out.println("________");
-//		System.out.println("________");
 		System.out.println("________");
 		System.err.println("tmpNew === " + tmpNew);
 		System.out.println("________");
@@ -898,13 +490,6 @@ public class MainActivity extends Activity
 		}
 		
 		
-		
-//		System.out.println(oddsPos + "< oddsPos ||| " + nextNew + "  namesEndPos > " + namesEndPos);
-//
-//		System.out.println("________");
-//		System.out.println("________");
-
-		
 		String nextAll = tmpNew.substring(namesEndPos);
 		
 		
@@ -917,8 +502,6 @@ public class MainActivity extends Activity
 
 		matchsList.add(nextNew);
 
-		// TODO: WTF is with for loop!!!
-		//	while (namesEndPos < DOMString.length()){
 			for (int i = 0; i < 5; i++){
 
 
@@ -939,87 +522,37 @@ public class MainActivity extends Activity
 				return matchsList;
 			}
 
-
 			nextNew = tmpNew.substring(0, namesEndPos);
-
 			nextAll = tmpNew.substring(namesEndPos);
-
-
-//			System.out.println("____tmpNew____");
-//			System.err.println(tmpNew + "____=____");
-//			System.out.println("___tmpNew___");
-//			System.out.println("____nxtAll____");
-//			System.err.println(nextAll + "____=____");
-//			System.out.println("___nxtAll_____");
-
-
 			matchsList.add(nextNew);
 
 		}
-
-
-
-
-
 
 		for (int i = 0; i < matchsList.size(); i++){
 			System.out.println(i + " : " + matchsList.get(i));
 		}
 
-
-		//	String tmpName = 
-		//	allDOM.substring(oddsPos, namesEndPos);
-//	
-//		System.out.println("tmpName === " + tmpName);
-
 		return matchsList;
 	}
 	
-	//private Elements kidsE;
-	//private Elements allE;
-	private int totalEs = 0;
+	//
 	private StringBuilder allText = new StringBuilder();
-	private StringBuilder allText2 = new StringBuilder();
-	private StringBuilder allText3 = new StringBuilder();
-	private String currentBitofText; // = new String();
+	
+	private String currentBitofText; 
 	
 	private String listChildren(Elements origPage){
-		int count = 0;
+		
 		Iterator elementsIter = origPage.iterator();
 		while (elementsIter.hasNext()){
 			Element currentElem = (Element) elementsIter.next();
-		//	allE = currentElem.getAllElements();
-	//		kidsE = currentElem.children();
-			
-	//		elementsAllChildren.addAll(allE);
-			
-//			currentBitofText = currentElem.text();
-//			allText.append(currentBitofText);
-//			
+		
 			Elements tmp = currentElem.getAllElements();
 			currentBitofText = tmp.outerHtml();
-			allText2.append(currentBitofText);
-			
-//			currentBitofText = currentElem.html();		
-//			allText3.append(currentBitofText);
-			
-//			System.out.println((count) + ": getAllElements.size === " + allE.size() + 
-//							   " ||| children.size === " + kidsE.size());
-//			totalEs += allE.size();
-//			
-//			System.out.print(count + " : " + allE + " | " + allE.size() + " <|||running total-> " + totalEs);
-//			count++;
-//			if (count % 10 == 0){
-//				System.out.println("__________");
-//			}
+			allText.append(currentBitofText);
 			
 			}
-//		System.out.println(count + " < count : total n of Elements:" + totalEs);
-//		System.out.println("allText: " + allText);
-//		System.out.println("allText2: " + allText2);
-//		System.out.println("allText3: " + allText3);
-		
-		return allText2.toString();
+
+		return allText.toString();
 	}
 	
 	
@@ -1080,8 +613,6 @@ public class MainActivity extends Activity
 	
 	
 	private boolean testOdds(String[] oddsString){
-		
-	//	StringBuilder builder = new StringBuilder();
 
 		String[] temps = oddsString;
 		Double[] tempd = new Double[3];
@@ -1117,15 +648,13 @@ public class MainActivity extends Activity
 				}
 				n++;	
 			}
-
-
 		}
 		double win1 = 0.0d;
 		double win2 = 0.0d;
 
 		for (int i = 0; i < trips.size();i++) 
 		{ 		      
-			//		System.out.println(trips.get(i)); 	
+			
 			Double[] t = trips.get(i);
 			String[] s = oddsList.get(i);
 			double min = t[0];
@@ -1133,9 +662,7 @@ public class MainActivity extends Activity
 			double oddsh = t[2];
 			double winMin = 100 * min;
 			double totStake = 100 + winMin;
-			double tot = winMin / (oddsl +  oddsh);
-			double stakel = oddsl * tot;
-			double stakeh = oddsh * tot;
+			
 
 			double stake1 = totStake / (1 + oddsl);
 			double stake2 = totStake - 100 - stake1;
@@ -1143,8 +670,222 @@ public class MainActivity extends Activity
 			win1 = (1 + oddsl) * stake1;
 			win2 = (1 + oddsh) * stake2;
 
-			double winA = stakel * (1 + oddsh);
-			double winB = stakeh * (1 + oddsl);
+
+			int stake1tmp = (int) (100 * stake1);
+			int stake2tmp =  (int)(100 * stake2);
+			double stake1rnd = (double) stake1tmp / 100;
+			double stake2rnd = (double) stake2tmp / 100;
+			
+			int win1tmp = (int) (100 * win1);
+			int win2tmp = (int) (100 * win2);
+			double win1rnd = (double) win1tmp / 100;
+			double win2rnd = (double) win2tmp / 100;
+			
+			winMin += 100;
+			
+			int winMintmp = (int) (100 * winMin);
+			double winMinrnd = (double) winMintmp / 100;
+			
+			int totStaketmp = (int) (100 * (stake1rnd + stake2rnd + 100));
+			double totStakernd = (double) totStaketmp / 100;
+			
+			
+			if (win2 > win1){
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n\n");
+				
+			}
+			builder.append("At " + s[0] + " bet 100.00 and win " + (winMinrnd)).append("\n");
+			builder.append("At " + s[1] + " bet " + stake1rnd + " and win " + (win1rnd)).append("\n");
+			builder.append("At " + s[2] + " bet " + stake2rnd + " and win " + (win2rnd)).append("\n");
+			builder.append("Total staked: " + (totStakernd));
+			if (win2 > win1){
+				builder.append(" with a possable return of " + win2rnd).append("\n");
+			}else{
+				builder.append("\n These are not great odds").append("\n");
+			}
+			
+			if (win2 > win1){
+				builder.append("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
+			}
+
+		}   
+		
+		return (win2 > win1);
+
+	}
+	
+}
+
+
+
+/*
+
+	 StringBuilder calcOdds(Document doc){
+
+	 StringBuilder builder = new StringBuilder();
+
+
+	 String[] temps = new String[3];
+	 Double[] tempd = new Double[3];
+	 List<Double[]> trips = new ArrayList<Double[]>();
+	 List<String[]> odds = new ArrayList<String[]>();
+
+
+
+	 elementsAll = doc.body().select("*");
+	 elementsAll = doc.body().select("*:matches(^[0-9]* /[0-9]*$)"); // Nb no space after *
+
+
+	String allAsText = listChildren(elementsAll);
+	writeToFile(allAsText, context);
+
+	String elementsAllText = elementsAll.text();
+
+
+
+	System.out.println("elms sz = "+ elementsAll.size());
+	System.err.println("elms sz = "+ elementsAll.size());
+
+
+//						String allText = doc.toString();
+//						System.err.println("*********************");
+//						System.out.println("*********************");
+//						
+//						allText = allText.replaceAll("\\s", "");
+//						System.out.println(elementsAllText);
+//					
+//						System.out.println("*********************");
+//						System.err.println("*********************");
+
+	System.out.println("call: listMatches(elementsAllText)--nb: with white space");
+	listMatches(elementsAllText);
+	System.out.println("return: listMatches(elementsAllText)");
+
+
+
+
+	int nix = 0;
+
+	Elements elemsAll = doc.body().select("*:matches(Italy)");
+	//	Elements elemsAll = doc.body().select("*:matches(Italy)");
+	//		Elements elemSingle = doc.body().select("*:matches(Serbia)");
+	//			Elements elemSingle = doc.body().select("*:matches(Armenia)");
+
+
+	//	elemsAll[18] = "";
+
+
+	elemsAll.size();
+
+
+
+	String allTextElems = elemsAll.text();
+
+	System.err.println("0 ==== " + allTextElems);
+
+	String namesAndOddEtc = "";
+
+
+	System.err.println("namesAndOddEtc === " + namesAndOddEtc);
+
+
+
+	String readString = readFromFile(context);
+	System.out.println("readString===" + readString);
+
+
+	Element names = doc.select("className.side-name").first();
+	// div with class=masthead
+
+
+
+	//			Elements elems2 = doc.body().select("*:contains(d)");
+	//		Elements elems2 = doc.body().select("*:matches(/)");
+	//		Elements elems2 = doc.body().select("*:matches([0-9]/|(Draw))");
+	//	Elements elems2 = doc.body().select("*:matches(^[0-9]* /[0-9]*$|(Draw))");	// Nb no space after *
+	Elements elems2 = doc.body().select("*:matches(^[0-9]* /[0-9]*$)");				// Nb no space after *
+
+
+	int nx = 0;
+	for (Element elementOdds : elems2) {
+		String s = elementOdds.ownText();
+		//				System.out.println((nx++) + " | " + s);
+	}
+
+
+	int n = 0;
+//						temps = new String[3];
+//						tempd = new Double[3];
+	for (Element element : elems2) {
+
+		double r = 0;
+		String s = element.ownText();
+//							temps = new String[3];
+//							tempd = new Double[3];
+		if (!s.isEmpty()){
+			r = parse(s);
+			int ix = n % 3;
+			if (ix==0){
+				temps = new String[3];
+				tempd = new Double[3];
+				temps[0] = s;
+				tempd[0] = r;
+			}
+			if (ix==1){
+				temps[1] = s;
+				tempd[1] = r;
+			}
+			if (ix==2){
+				temps[2] = s;
+				tempd[2] = r;
+				Arrays.sort(tempd);
+				trips.add(tempd);
+				temps = sortOdds(temps);
+				odds.add(temps);
+			}
+
+
+
+//								System.out.print(ix + "ix ===" + n);
+//						
+//								System.err.print(element.ownText() + "=element.ownText() String ==" + s);
+//								System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
+
+//				System.out.print(ix + "ix ===" + n);
+//
+//				System.err.print(element.ownText() + "=element.ownText() String ==" + s);
+//				System.err.print(element.ownText() + "=element.ownText() parsed ==" + r);
+
+			n++;	
+		}
+
+
+	}
+
+	for (int i = 0; i < trips.size();i++) 
+	{ 		      
+		//		System.out.println(trips.get(i)); 	
+		Double[] t = trips.get(i);
+		String[] s = odds.get(i);
+		double min = t[0];
+		double oddsl = t[1];
+		double oddsh = t[2];
+		double winMin = 100 * min;
+		double totStake = 100 + winMin;
+		double tot = winMin / (oddsl +  oddsh);
+		double stakel = oddsl * tot;
+		double stakeh = oddsh * tot;
+
+		double stake1 = totStake / (1 + oddsl);
+		double stake2 = totStake - 100 - stake1;
+
+		double win1 = (1 + oddsl) * stake1;
+		double win2 = (1 + oddsh) * stake2;
+
+		double winA = stakel * (1 + oddsh);
+		double winB = stakeh * (1 + oddsl);
 
 
 
@@ -1158,69 +899,58 @@ public class MainActivity extends Activity
 //							System.out.println("____________________");
 //
 
-			int stake1tmp = (int) (100 * stake1);
-			int stake2tmp =  (int)(100 * stake2);
-			double stake1rnd = (double) stake1tmp / 100;
-			double stake2rnd = (double) stake2tmp / 100;
-			
-			int win1tmp = (int) (100 * win1);
-			int win2tmp = (int) (100 * win2);
-			double win1rnd = (double) win1tmp / 100;
-			double win2rnd = (double) win2tmp / 100;
-			
-			int winMintmp = (int) (100 * winMin);
-			double winMinrnd = (double) winMintmp / 100;
-			
-/*
-			 4/9|||47/10|||7/1
-			 100.00|||25.3411306042885|||19.103313840155955
-			 44.44444444444444|||144.44444444444446|||152.82651072124764
-*/
-
-
-			if (win2 > win1){
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n\n");
-				
-			}
-			builder.append("At " + s[0] + " bet 100.00 and win " + (winMinrnd + 100)).append("\n");
-			builder.append("At " + s[1] + " bet " + stake1rnd + " and win " + (win1rnd)).append("\n");
-			builder.append("At " + s[2] + " bet " + stake2rnd + " and win " + (win2rnd)).append("\n");
-			builder.append("Total staked: " + (stake1rnd + stake2rnd + 100));
-			if (win2 > win1){
-				builder.append(" with a possable return of " + win2rnd).append("\n");
-			}else{
-				builder.append("\n These are not great odds").append("\n");
-			}
-			
-//			builder.append((s[0] + "|||" + s[1] + "|||" + s[2])).append("\n");
-//			builder.append(("100.00"  + "|||" + stake1 + "|||" + stake2)).append("\n");
-//			builder.append((winMin  + "|||" + win1 + "|||" + win2)).append("\n");
-//			builder.append(("____________________"+totStake)).append("\n");
-
-			if (win2 > win1){
-				builder.append("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
-				
-				
-			}
 
 
 
-		}   
+
+		if (win2 > win1){
+			builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
+
+
+		}
+		builder.append((s[0] + "|||" + s[1] + "|||" + s[2])).append("\n");
+		builder.append(("100.00"  + "|||" + stake1 + "|||" + stake2)).append("\n");
+		builder.append((winMin  + "|||" + win1 + "|||" + win2)).append("\n");
+		builder.append(("____________________")).append("\n");
+
+		if (win2 > win1){
+			builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			builder.append("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$").append("\n");
+
+		}
+
+
+
+	}   
+
+		//	Document doc = Jsoup.connect(url).get();
+
+		//		Element body = doc.body();
+		//		builder.append(body.text());
+
+
+		//		Document doc = Jsoup.connect("https://stackoverflow.com/questions/11970938/java-html-parser-to-extract-specific-data").get();
+		//		Elements spans = doc.select("span[class=hidden-text]");
+		//		for (Element span: spans) {
+		//			System.out.println(span.text());
+		//		}
+
+
+//		Element body = doc.body();
+
+		//		builder.append("b.xxx");
+		//		builder.append(body.text());
+
+		//		System.out.println(body.text());
 		
-		return (win2 > win1);
-
+		return builder;
 		
-	//	return builder;
-
-	
 	}
-	
-	
-	
 
-}
+*/
 
 
 /*
