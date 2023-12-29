@@ -54,10 +54,12 @@ public class MainActivity extends Activity
 	private static final String TAG_INFO = "info:..";
 	private Elements elementsAll;
 	
-    private TextView result;
-    private Button fetch;
+	private TextView result;
+	private Button fetch;
 
 	private StringBuilder builder = new StringBuilder();
+	private StringBuilder allText = new StringBuilder();
+	private String currentBitofText; 
 	
 	
 	
@@ -469,9 +471,7 @@ public class MainActivity extends Activity
 		return matchsList;
 	}
 	
-	
-	private StringBuilder allText = new StringBuilder();
-	private String currentBitofText; 
+
 	private String listChildren(Elements origPage){
 		
 		Iterator elementsIter = origPage.iterator();
